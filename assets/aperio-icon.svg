@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Aperio Digital icon (dark). Radial glow renders best in browsers & design tools. Light sits at the tip of the innermost line. -->
+  <defs>
+    <radialGradient id="apGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#FFFFFF"/>
+      <stop offset="9%"  stop-color="#FFF3CE"/>
+      <stop offset="30%" stop-color="#F5D976" stop-opacity="0.85"/>
+      <stop offset="62%" stop-color="#D4AF37" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="apCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="55%" stop-color="#FFF3CE"/>
+      <stop offset="100%" stop-color="#F0C640"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="64" fill="#0B0E14"/>
+  <circle cx="256" cy="238" r="150" fill="url(#apGlow)"/>
+  <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M120,400 L256,90 L392,400"  stroke="#2E6BFF" stroke-width="15"/>
+    <path d="M162,400 L256,164 L350,400"  stroke="#4a80ff" stroke-width="13" opacity="0.72"/>
+    <path d="M204,400 L256,238 L308,400"  stroke="#6b9aff" stroke-width="11" opacity="0.5"/>
+  </g>
+  <circle cx="256" cy="238" r="8" fill="url(#apCore)"/>
+</svg>

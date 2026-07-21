@@ -8,6 +8,10 @@
 <meta property="og:title" content="Aperio Digital">
 <meta property="og:description" content="Performance marketing built to generate leads, increase sales, and drive real business growth.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="assets/aperio-lockup-dark.png">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="assets/aperio-icon.svg">
+<link rel="apple-touch-icon" href="assets/aperio-appicon-rounded-256.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -44,7 +48,8 @@ h1,h2,h3{font-family:var(--display);color:var(--head);text-transform:uppercase;l
 nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 nav.scrolled{background:rgba(11,14,20,.95);backdrop-filter:blur(12px);border-bottom-color:var(--border)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
-.logo{font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:.18em;color:var(--head);text-decoration:none}
+.logo{display:inline-flex;align-items:center;text-decoration:none}
+.logo img{height:34px;width:auto;display:block}
 .logo span{color:var(--blue)}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{color:var(--body);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-family:var(--display);transition:color .2s}
@@ -173,6 +178,8 @@ textarea{min-height:130px;resize:vertical}
 
 /* footer */
 footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
+.foot-brand{display:flex;justify-content:center;padding-bottom:30px;margin-bottom:30px;border-bottom:1px solid var(--border)}
+.foot-brand img{height:42px;width:auto;opacity:.9}
 .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:.82rem}
 .foot .links{display:flex;gap:24px}
 .foot a{color:var(--body);text-decoration:none}
@@ -201,7 +208,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 
 <nav id="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="#top">APERIO<span>&nbsp;DIGITAL</span></a>
+    <a class="logo" href="#top"><img src="assets/aperio-lockup-dark-transparent.png" alt="Aperio Digital"></a>
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
       <li><a href="#services">Services &amp; Pricing</a></li>
@@ -567,6 +574,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 </section>
 
 <footer>
+  <div class="wrap foot-brand"><a href="#top"><img src="assets/aperio-lockup-dark-transparent.png" alt="Aperio Digital"></a></div>
   <div class="wrap foot">
     <span>© 2026 Aperio Digital. All rights reserved.</span>
     <div class="socials">
