@@ -71,6 +71,9 @@ nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom-c
 :root[data-theme="light"] .logo img.logo-dark,:root[data-theme="light"] .foot-brand img.logo-dark{display:none}
 :root[data-theme="light"] .logo img.logo-light,:root[data-theme="light"] .foot-brand img.logo-light{display:block}
 .logo span{color:var(--blue)}
+.logo-word{font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;color:var(--gold);line-height:1;margin-left:6px;white-space:nowrap}
+.logo .logo-word em{font-style:normal;color:var(--blue)}
+@media(max-width:420px){.logo-word{font-size:1.05rem}}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{color:var(--body);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-family:var(--display);transition:color .2s}
 .nav-links a:hover{color:var(--head)}
@@ -275,6 +278,20 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 .tst .who b{display:block;color:var(--head);font-family:var(--display);font-size:.9rem;letter-spacing:.03em}
 .tst .who span{font-size:.8rem;color:var(--body)}
 
+/* portfolio "more coming soon" banner */
+.pf-more{margin-top:32px;border:1px dashed var(--border);border-radius:8px;background:var(--surface);padding:38px 40px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;transition:border-color .25s}
+.pf-more:hover{border-color:var(--gold)}
+.pf-more .pf-more-txt{max-width:640px}
+.pf-more .pf-dots{display:inline-flex;gap:7px;margin-bottom:14px}
+.pf-more .pf-dots i{width:9px;height:9px;border-radius:50%;background:var(--gold);opacity:.35;animation:pfpulse 1.4s ease-in-out infinite}
+.pf-more .pf-dots i:nth-child(2){animation-delay:.2s}
+.pf-more .pf-dots i:nth-child(3){animation-delay:.4s}
+@keyframes pfpulse{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+.pf-more h3{font-size:1.25rem;letter-spacing:.02em;margin-bottom:8px}
+.pf-more p{font-size:.92rem}
+.pf-more .btn{white-space:nowrap;flex-shrink:0}
+@media(max-width:640px){.pf-more{flex-direction:column;align-items:flex-start;text-align:left}}
+
 @media(max-width:900px){
   .nav-links,.nav-cta{display:none}
   .pain-grid,.proc,.tst-grid{grid-template-columns:1fr}
@@ -301,6 +318,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <a class="logo" href="#top">
       <img class="logo-dark" src="assets/aperio-icon-glow-transparent-1024.png" alt="Aperio Digital">
       <img class="logo-light" src="assets/aperio-icon-light-transparent-1024.png" alt="Aperio Digital">
+      <span class="logo-word">Aperio <em>Digital</em></span>
     </a>
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
@@ -716,6 +734,14 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <p style="margin-top:16px;max-width:640px">Live previews of real client websites. Hover any preview to visit the site.</p>
     </div>
     <div class="pf-grid" id="pfGrid"></div>
+    <div class="pf-more reveal">
+      <div class="pf-more-txt">
+        <span class="pf-dots"><i></i><i></i><i></i></span>
+        <h3>More Projects in the Works</h3>
+        <p>New client websites are in design and launching soon. Want your business featured here next?</p>
+      </div>
+      <a class="btn btn-solid" href="#contact">Start Your Project</a>
+    </div>
   </div>
 </section>
 
@@ -910,7 +936,7 @@ document.querySelectorAll('.num[data-count]').forEach(el=>io2.observe(el));
 
 // ===== PORTFOLIO — edit this list to add/remove showcased sites =====
 const PORTFOLIO_SITES=[
-  {name:"Client Site One",tag:"Agency",url:"https://example.com"},
+  {name:"Supreme Barbershop",tag:"Barbershop",url:"https://supremebarbershop.co"},
 ];
 const pfGrid=document.getElementById('pfGrid');
 PORTFOLIO_SITES.forEach(site=>{
