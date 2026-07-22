@@ -15,20 +15,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+// Apply saved / preferred theme before paint to avoid a flash
+(function(){
+  try{
+    var saved=localStorage.getItem('theme');
+    var theme=saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+    document.documentElement.setAttribute('data-theme',theme);
+  }catch(e){document.documentElement.setAttribute('data-theme','dark');}
+})();
+</script>
 <style>
 :root{
   --bg:#0B0E14; --surface:#11151D; --border:#232A36;
   --head:#F5F6F8; --body:#9AA3B2;
   --blue:#2E6BFF; --blue-dim:#1d4ed8; --gold:#D4AF37;
+  --nav-bg:rgba(11,14,20,.95); --grain-opacity:.03;
   --display:'Space Grotesk',sans-serif; --sans:'Inter',sans-serif;
+}
+:root[data-theme="light"]{
+  --bg:#edf1f4; --surface:#ffffff; --border:#E2E7EE;
+  --head:#0B0E14; --body:#4B5563;
+  --blue:#2E6BFF; --blue-dim:#1d4ed8; --gold:#A67C11;
+  --nav-bg:rgba(246,248,251,.9); --grain-opacity:.02;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s ease,color .3s ease}
 ::selection{background:var(--blue);color:#fff}
 
 /* grain */
-.grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+.grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:var(--grain-opacity);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 h1,h2,h3{font-family:var(--display);color:var(--head);text-transform:uppercase;letter-spacing:-.01em;line-height:1.05}
@@ -46,15 +63,26 @@ h1,h2,h3{font-family:var(--display);color:var(--head);text-transform:uppercase;l
 
 /* nav */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
-nav.scrolled{background:rgba(11,14,20,.95);backdrop-filter:blur(12px);border-bottom-color:var(--border)}
+nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom-color:var(--border)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
 .logo{display:inline-flex;align-items:center;text-decoration:none}
-.logo img{height:34px;width:auto;display:block}
+.logo img{height:70px;width:auto;display:block}
+.logo img.logo-light,.foot-brand img.logo-light{display:none}
+:root[data-theme="light"] .logo img.logo-dark,:root[data-theme="light"] .foot-brand img.logo-dark{display:none}
+:root[data-theme="light"] .logo img.logo-light,:root[data-theme="light"] .foot-brand img.logo-light{display:block}
 .logo span{color:var(--blue)}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{color:var(--body);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-family:var(--display);transition:color .2s}
 .nav-links a:hover{color:var(--head)}
 .nav-cta{font-size:.75rem;padding:12px 22px}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid var(--border);border-radius:6px;width:44px;height:44px;cursor:pointer;color:var(--head);transition:border-color .2s,color .2s;flex-shrink:0}
+.theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.theme-toggle svg{width:18px;height:18px;display:block}
+.theme-toggle .icon-sun{display:none}
+.theme-toggle .icon-moon{display:block}
+:root[data-theme="light"] .theme-toggle .icon-sun{display:block}
+:root[data-theme="light"] .theme-toggle .icon-moon{display:none}
+.nav-actions{display:flex;align-items:center;gap:16px}
 .burger{display:none;background:none;border:1px solid var(--border);border-radius:6px;width:44px;height:44px;cursor:pointer;position:relative;z-index:210}
 .burger span{display:block;width:18px;height:2px;background:var(--head);margin:4px auto;transition:.3s}
 .burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -208,7 +236,10 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 
 <nav id="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="#top"><img src="assets/aperio-icon-glow-transparent-1024.png" alt="Aperio Digital"></a>
+    <a class="logo" href="#top">
+      <img class="logo-dark" src="assets/aperio-icon-glow-transparent-1024.png" alt="Aperio Digital">
+      <img class="logo-light" src="assets/aperio-icon-light-transparent-1024.png" alt="Aperio Digital">
+    </a>
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
       <li><a href="#services">Services &amp; Pricing</a></li>
@@ -217,8 +248,14 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="nav-actions">
     <a class="btn btn-solid nav-cta" href="#contact">Request a Call</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode" title="Toggle theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path></svg>
+    </button>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -574,7 +611,10 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 </section>
 
 <footer>
-  <div class="wrap foot-brand"><a href="#top"><img src="assets/aperio-lockup-dark-transparent.png" alt="Aperio Digital"></a></div>
+  <div class="wrap foot-brand"><a href="#top">
+    <img class="logo-dark" src="assets/aperio-lockup-dark-transparent.png" alt="Aperio Digital">
+    <img class="logo-light" src="assets/aperio-lockup-light.png" alt="Aperio Digital">
+  </a></div>
   <div class="wrap foot">
     <span>© 2026 Aperio Digital. All rights reserved.</span>
     <div class="socials">
@@ -588,6 +628,18 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 // nav scroll state
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50),{passive:true});
+
+// theme toggle (light / dark)
+const themeToggle=document.getElementById('themeToggle');
+themeToggle.addEventListener('click',()=>{
+  const next=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',next);
+  try{localStorage.setItem('theme',next)}catch(e){}
+});
+// follow OS changes only while the user hasn't set an explicit preference
+matchMedia('(prefers-color-scheme: light)').addEventListener('change',e=>{
+  if(!localStorage.getItem('theme'))document.documentElement.setAttribute('data-theme',e.matches?'light':'dark');
+});
 
 // mobile menu
 const burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
