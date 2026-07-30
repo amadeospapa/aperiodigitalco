@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aperio Digital — A Marketing Agency for Businesses</title>
-<meta name="description" content="Performance marketing built to generate leads, increase sales, and drive real business growth. Websites, Meta ads, CRM & automation. Greater Boston, MA.">
+<meta name="description" content="Performance marketing built to generate leads, increase sales, and drive real business growth. Websites, CRM & automation. Greater Boston, MA.">
 <meta property="og:title" content="Aperio Digital">
 <meta property="og:description" content="Performance marketing built to generate leads, increase sales, and drive real business growth.">
 <meta property="og:type" content="website">
@@ -158,6 +158,14 @@ section{padding:110px 0}
 .plan li::before{content:"→";position:absolute;left:0;color:var(--blue);font-size:.8rem}
 .plan .fine{font-size:.72rem;color:#6b7484;margin-bottom:20px;line-height:1.5}
 .plan .btn{text-align:center}
+.own-banner{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px 40px;margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.own-banner .own-info{flex:1;min-width:280px}
+.own-banner h3{font-size:1.05rem;letter-spacing:.06em;margin-bottom:8px}
+.own-banner p{font-size:.88rem;color:var(--body);max-width:640px}
+.own-banner .own-side{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.own-banner .own-price{font-family:var(--display);font-size:1.9rem;font-weight:700;white-space:nowrap}
+.own-banner .own-price small{display:block;font-size:.72rem;font-weight:400;color:#6b7484;letter-spacing:0}
+.own-banner .btn{white-space:nowrap}
 .subhead{margin:100px 0 0}
 .subhead h3{font-size:clamp(1.5rem,3vw,2.2rem);margin-top:12px}
 .subhead p{max-width:700px;margin-top:16px}
@@ -209,9 +217,10 @@ textarea{min-height:130px;resize:vertical}
 
 /* footer */
 footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
-.foot-brand{display:flex;justify-content:center;padding-bottom:30px;margin-bottom:30px;border-bottom:1px solid var(--border)}
-.foot-brand img{height:42px;width:auto;opacity:.9}
-.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:.82rem}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 28px;font-size:.82rem}
+.foot .logo{margin-right:auto}
+.foot .logo img{height:38px;width:auto;opacity:.9}
+.foot .logo-word{font-size:1.1rem}
 .foot .links{display:flex;gap:24px}
 .foot a{color:var(--body);text-decoration:none}
 .foot a:hover{color:var(--head)}
@@ -376,7 +385,9 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>Driven by Data.<br>Proven by Results.</h2>
     </div>
     <div class="stats">
+      <!-- Ad-spend ROAS stat hidden while focusing on website marketing. Uncomment to restore.
       <div class="stat reveal"><span class="num" data-count="3.8" data-suffix="x">0x</span><h3>Average ROAS</h3><p>Consistent return on ad spend across campaigns focused on profitable growth and long-term performance.</p></div>
+      -->
       <div class="stat reveal"><span class="num" data-count="10000" data-suffix="+">0+</span><h3>Leads Generated</h3><p>High-quality lead generation systems built to attract, qualify, and convert the right customers.</p></div>
       <div class="stat reveal"><span class="num" data-count="500" data-prefix="$" data-suffix="K+">$0K+</span><h3>Revenue Generated</h3><p>Total combined revenue generated across client campaigns through performance-driven marketing and optimized ad strategy.</p></div>
     </div>
@@ -389,10 +400,10 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <span class="eyebrow">How We Drive Growth</span>
       <div class="rule"></div>
       <p class="big">At Aperio Digital, we combine clear strategy, data-driven decisions, and strong execution to help businesses generate qualified leads, increase sales, and build marketing systems that perform.</p>
-      <p style="margin-top:20px">From Meta ads and websites to CRM, email, and SMS automation, our focus is creating real growth that can be tracked, improved, and scaled.</p>
+      <p style="margin-top:20px">From custom websites to CRM, email, and SMS automation, our focus is creating real growth that can be tracked, improved, and scaled.</p>
     </div>
     <div class="tags reveal">
-      <span><b>01</b> Meta Ads</span><span><b>02</b> Custom Websites</span><span><b>03</b> CRM Systems</span><span><b>04</b> Email Automation</span><span><b>05</b> SMS Follow-Up</span><span><b>06</b> Lead Tracking</span><span><b>07</b> Reporting</span>
+      <span><b>01</b> Custom Websites</span><span><b>02</b> CRM Systems</span><span><b>03</b> Email Automation</span><span><b>04</b> SMS Follow-Up</span><span><b>05</b> Lead Tracking</span><span><b>06</b> Reporting</span>
     </div>
   </div>
 </section>
@@ -405,9 +416,9 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     </div>
     <div class="who">
       <div class="card reveal"><span class="idx">/ 01</span><h3>Local Service Businesses</h3><p>Pressure washing, cleaning, detailing, landscaping, gutters, tinting, fencing, and other service-based businesses looking for more leads and booked jobs.</p></div>
-      <div class="card reveal"><span class="idx">/ 02</span><h3>Online &amp; Product Brands</h3><p>Online stores, eCommerce brands, product-based businesses, and companies looking to increase sales through paid ads and better marketing systems.</p></div>
+      <div class="card reveal"><span class="idx">/ 02</span><h3>Online &amp; Product Brands</h3><p>Online stores, eCommerce brands, product-based businesses, and companies looking to increase sales through better websites and marketing systems.</p></div>
       <div class="card reveal"><span class="idx">/ 03</span><h3>Contractors &amp; Home Services</h3><p>Roofing, HVAC, remodeling, construction, real estate services, and businesses where each new customer can create strong revenue growth.</p></div>
-      <div class="card reveal"><span class="idx">/ 04</span><h3>Any Business With Growth Goals</h3><p>Restaurants, gyms, personal brands, local companies, and other businesses that need stronger websites, better ads, or more consistent customer flow.</p></div>
+      <div class="card reveal"><span class="idx">/ 04</span><h3>Any Business With Growth Goals</h3><p>Restaurants, gyms, personal brands, local companies, and other businesses that need stronger websites or more consistent customer flow.</p></div>
     </div>
   </div>
 </section>
@@ -431,11 +442,13 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <h3>Outdated or Slow Website</h3>
         <p>Looks dated, loads slowly, and turns visitors away before they ever reach out — especially on their phones.</p>
       </div>
+<!-- Ads pain point hidden while focusing on website marketing. Uncomment to restore.
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M7 15l3-4 3 3 5-7"></path></svg></div>
         <h3>Ads With No Real Return</h3>
         <p>Money going out to boosted posts and campaigns with no clear tracking on what actually brings in customers.</p>
       </div>
+      -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
         <h3>Slow Lead Response</h3>
@@ -466,9 +479,10 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="sec-head reveal price-intro">
       <span class="eyebrow">Services &amp; Pricing</span>
       <h2>Growth Systems Built<br>for Your Business</h2>
-      <p style="margin-top:18px">From Meta ads and custom websites to email and SMS automation, we build practical systems designed to help businesses generate more leads, increase sales, and grow consistently.</p>
+      <p style="margin-top:18px">From custom websites to email and SMS automation, we build practical systems designed to help businesses generate more leads, increase sales, and grow consistently.</p>
     </div>
 
+    <!-- ===== META ADVERTISING PACKAGES — hidden while focusing on website marketing. Uncomment this whole block to restore. =====
     <div class="reveal">
       <span class="eyebrow" style="color:var(--gold)">Meta Advertising Packages</span>
     </div>
@@ -553,6 +567,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <a class="btn btn-ghost" href="#contact">Request a Call</a>
       </div>
     </div>
+    ===== END META ADVERTISING PACKAGES ===== -->
 
     <div class="subhead reveal">
       <span class="eyebrow" style="color:var(--gold)">Website Development Packages</span>
@@ -561,86 +576,63 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     </div>
     <div class="plans">
       <div class="plan reveal">
-        <h3>Essential Website</h3>
-        <div class="price">$500<small>build fee + $75/mo hosting &amp; maintenance</small></div>
+        <h3>Essential</h3>
+        <div class="price">$500<small>build + $50/mo</small></div>
         <p class="desc">Perfect for small businesses that need a clean, professional website to showcase their services.</p>
         <ul>
-          <li>1–3 Page Custom Website</li>
-          <li>Mobile-Optimized Design</li>
-          <li>Basic SEO Page Setup</li>
-          <li>Contact Form Setup</li>
-          <li>Click-to-Call &amp; Click-to-Email Buttons</li>
-          <li>Social Media Link Integration</li>
-          <li>Basic Gallery or Image Section</li>
-          <li>Custom Domain Setup</li>
-          <li>Hosting &amp; Maintenance Managed by Aperio</li>
-          <li>Website Security &amp; SSL Setup</li>
-          <li>Up to 2 Website Edits Per Month</li>
-          <li>Monthly Website Checkup</li>
-        </ul>
-        <a class="btn btn-ghost" href="#contact">Request a Call</a>
-      </div>
-      <div class="plan reveal">
-        <h3>Growth Website</h3>
-        <div class="price">$1,000<small>build fee + $150/mo management + inquiry system</small></div>
-        <p class="desc">A stronger website with basic inquiry tracking, CRM setup, and follow-up for new website leads.</p>
-        <ul>
-          <li>4–5 Page Custom Website</li>
-          <li>Enhanced SEO Page Setup</li>
-          <li>Multiple Contact Forms &amp; Lead Capture</li>
-          <li>Website Forms Connected to CRM</li>
-          <li>Basic Website Inquiry Pipeline</li>
-          <li>Instant Website Inquiry Alerts</li>
-          <li>Automated Text/Email Confirmations</li>
-          <li>Basic Inquiry Follow-Up Automation</li>
-          <li>Google Reviews Section</li>
-          <li>Google Maps Integration</li>
-          <li>Custom Domain Setup</li>
-          <li>Up to 7 Website Edits Per Month</li>
-          <li>Monthly Website Checkup</li>
+          <li>1–3 Page Custom Website, Mobile-Optimized</li>
+          <li>Basic SEO Setup (Titles, Meta Descriptions, Image Alt Text)</li>
+          <li>Contact Form + Click-to-Call / Click-to-Email Buttons</li>
+          <li>Social Media Links + Basic Photo Gallery</li>
+          <li>Custom Domain Connection, SSL, Hosting &amp; Maintenance</li>
+          <li>Free Google Business Profile Claim &amp; Basic Setup (Bundled)</li>
+          <li>2 Website Edits Per Month</li>
+          <li>Monthly Uptime/Security Checkup</li>
         </ul>
         <a class="btn btn-ghost" href="#contact">Request a Call</a>
       </div>
       <div class="plan popular reveal">
-        <span class="badge">Best Value</span>
-        <h3>Business Elite Website</h3>
-        <div class="price">$1,500<small>build fee + $250/mo management + CRM system</small></div>
-        <p class="desc">A hands-off website system with advanced lead capture, CRM follow-up, booking tools, and ongoing support.</p>
+        <span class="badge">Most Popular</span>
+        <h3>Growth</h3>
+        <div class="price">$700<small>build + $75/mo</small></div>
+        <p class="desc">A stronger website with enhanced SEO, multiple lead-capture forms, and instant alerts on new inquiries.</p>
         <ul>
-          <li>5–8 Page Custom Website</li>
-          <li>Everything in the Growth Website Package</li>
-          <li>Advanced SEO Page Setup</li>
-          <li>Advanced Website Lead Pipeline</li>
-          <li>Advanced Inquiry Follow-Up Automation</li>
-          <li>Missed Call Text-Back Automation</li>
-          <li>Google Review Request Automation</li>
-          <li>Website Chat Widget Setup</li>
-          <li>Booking/Estimate Calendar Setup</li>
-          <li>Domain Included With Active Monthly Plan</li>
-          <li>Priority Monthly Website Edits</li>
-          <li>2 Monthly Website Checkups</li>
+          <li>Everything in Essential</li>
+          <li>4–5 Pages, Enhanced SEO (Keyword-Targeted Page Structure)</li>
+          <li>Multiple Lead-Capture Forms With Instant Text/Email Alerts on New Inquiries</li>
+          <li>Google Reviews Widget + Google Maps Embed</li>
+          <li>1 Free Custom Business Email Mailbox (e.g. info@yourbusiness.com, Bundled)</li>
+          <li>5 Website Edits Per Month, 48-Hour Turnaround</li>
+          <li>Quarterly Design/Content Refresh Check-In</li>
         </ul>
         <a class="btn btn-solid" href="#contact">Request a Call</a>
       </div>
       <div class="plan reveal">
-        <h3>Complete Website Ownership</h3>
-        <div class="price">$4,500<small>one-time payment — no monthly management fee</small></div>
-        <p class="desc">Complete ownership and long-term value. Pay once to own your website, custom domain, and website assets, with everything transferred after launch.</p>
+        <h3>Elite</h3>
+        <div class="price">$900<small>build + $99/mo</small></div>
+        <p class="desc">A hands-off website system with advanced SEO, booking tools, automation, and a CRM-connected lead pipeline.</p>
         <ul>
-          <li>Full Ownership of Your Website</li>
-          <li>Full Ownership of Your Custom Domain</li>
-          <li>Website &amp; Domain Transferred After Launch</li>
-          <li>Professional Custom Website Build</li>
-          <li>Advanced SEO Page Setup</li>
-          <li>Contact Forms &amp; Lead Capture Setup</li>
-          <li>Basic CRM &amp; Lead Pipeline Setup</li>
-          <li>Instant New Lead Alerts Configured</li>
-          <li>Basic Text/Email Follow-Up Automation</li>
-          <li>Google Reviews &amp; Maps Integration</li>
-          <li>30 Days of Post-Launch Support</li>
+          <li>Everything in Growth</li>
+          <li>5–8 Pages, Advanced SEO + Local Schema Markup</li>
+          <li>Booking/Appointment Calendar Integration</li>
+          <li>Missed-Call Text-Back Automation</li>
+          <li>Live Chat Widget + CRM-Connected Lead Pipeline</li>
+          <li>2 Free Business Email Mailboxes</li>
+          <li>Priority Edits, 24-Hour Turnaround</li>
+          <li>Monthly Strategy Check-In Call</li>
         </ul>
-        <p class="fine">Client pays website platform, domain, CRM, SMS &amp; email usage costs after transfer. Future edits, CRM updates, or automation changes available separately.</p>
         <a class="btn btn-ghost" href="#contact">Request a Call</a>
+      </div>
+    </div>
+
+    <div class="own-banner reveal">
+      <div class="own-info">
+        <h3>Complete Website Ownership</h3>
+        <p>Pay once to own your website, custom domain, and website assets outright — everything transferred to you after launch, with no monthly management fee.</p>
+      </div>
+      <div class="own-side">
+        <div class="own-price">$3,000<small>one-time payment</small></div>
+        <a class="btn btn-solid" href="#contact">Request a Call</a>
       </div>
     </div>
 
@@ -668,6 +660,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     </div>
     <div class="est-grid">
       <div class="reveal">
+        <!-- Meta Advertising estimator option — hidden while focusing on website marketing. Uncomment to restore.
         <div class="est-group">
           <span class="eyebrow" style="color:var(--gold)">Meta Advertising</span>
           <div class="opt-row" data-group="meta">
@@ -677,21 +670,24 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
             <div class="opt" data-setup="0" data-monthly="2500" data-label="Meta Lead Elite System"><span class="on">Lead Elite</span><span class="op">$2,500/mo</span></div>
           </div>
         </div>
+        -->
         <div class="est-group">
           <span class="eyebrow" style="color:var(--gold)">Website</span>
           <div class="opt-row" data-group="web">
             <div class="opt sel" data-setup="0" data-monthly="0" data-label="No Website"><span class="on">None</span><span class="op">—</span></div>
-            <div class="opt" data-setup="500" data-monthly="75" data-label="Essential Website"><span class="on">Essential</span><span class="op">$500 + $75/mo</span></div>
-            <div class="opt" data-setup="1000" data-monthly="150" data-label="Growth Website"><span class="on">Growth</span><span class="op">$1,000 + $150/mo</span></div>
-            <div class="opt" data-setup="1500" data-monthly="250" data-label="Business Elite Website"><span class="on">Business Elite</span><span class="op">$1,500 + $250/mo</span></div>
-            <div class="opt" data-setup="4500" data-monthly="0" data-label="Complete Website Ownership"><span class="on">Own It Outright</span><span class="op">$4,500 once</span></div>
+            <div class="opt" data-setup="500" data-monthly="50" data-label="Essential Website"><span class="on">Essential</span><span class="op">$500 + $50/mo</span></div>
+            <div class="opt" data-setup="700" data-monthly="75" data-label="Growth Website"><span class="on">Growth</span><span class="op">$700 + $75/mo</span></div>
+            <div class="opt" data-setup="900" data-monthly="99" data-label="Elite Website"><span class="on">Elite</span><span class="op">$900 + $99/mo</span></div>
+            <div class="opt" data-setup="3000" data-monthly="0" data-label="Complete Website Ownership"><span class="on">Own It Outright</span><span class="op">$3,000 once</span></div>
           </div>
         </div>
         <div class="est-group">
           <span class="eyebrow" style="color:var(--gold)">Add-Ons</span>
           <div class="opt-row" data-group="addon" data-multi="1">
             <div class="opt" data-setup="0" data-monthly="300" data-label="CRM &amp; Automation Management"><span class="on">CRM &amp; Automation</span><span class="op">$300/mo</span></div>
+            <!-- Creative Design (ad creative) add-on hidden for website-marketing phase:
             <div class="opt" data-setup="0" data-monthly="100" data-label="Creative Design Add-On"><span class="on">Creative Design</span><span class="op">$100/mo</span></div>
+            -->
           </div>
         </div>
       </div>
@@ -702,7 +698,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <div class="est-total"><span class="lab">Setup</span><span class="val" id="estSetup">$0</span></div>
         <div class="est-total sub"><span class="lab">Monthly</span><span class="val" id="estMonthly">$0<small>/mo</small></span></div>
         <a class="btn btn-solid" href="#contact">Get My Custom Quote</a>
-        <p class="est-fine">Estimates only — final pricing depends on your goals. Ad budget is paid directly to Meta. SMS &amp; email usage may be billed separately if usage becomes excessive.</p>
+        <p class="est-fine">Estimates only — final pricing depends on your goals. <!-- Ad budget is paid directly to Meta. --> SMS &amp; email usage may be billed separately if usage becomes excessive.</p>
       </div>
     </div>
   </div>
@@ -718,7 +714,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="proc">
       <div class="step reveal"><span class="snum">01</span><span class="swhen">Day 1</span><h3>Discovery Call</h3><p>We learn your business, goals, margins, and what a new customer is actually worth to you.</p></div>
       <div class="step reveal"><span class="snum">02</span><span class="swhen">Week 1</span><h3>Strategy &amp; Plan</h3><p>We map the offer, audiences, funnel, and systems around your goals — built for you, not from a template.</p></div>
-      <div class="step reveal"><span class="snum">03</span><span class="swhen">Week 1–2</span><h3>Build &amp; Setup</h3><p>Ads, website, CRM, and automations built, connected, and tested end to end before anything goes live.</p></div>
+      <div class="step reveal"><span class="snum">03</span><span class="swhen">Week 1–2</span><h3>Build &amp; Setup</h3><p>Website, CRM, and automations built, connected, and tested end to end before anything goes live.</p></div>
       <div class="step reveal"><span class="snum">04</span><span class="swhen">Week 2</span><h3>Launch</h3><p>Campaigns go live with tracking in place, so every lead and every dollar of spend is measured.</p></div>
       <div class="step reveal"><span class="snum">05</span><span class="swhen">Ongoing</span><h3>Optimize</h3><p>Daily monitoring, creative testing, and continuous improvement — your systems get sharper week over week.</p></div>
       <div class="step reveal"><span class="snum">06</span><span class="swhen">Monthly</span><h3>Report &amp; Scale</h3><p>Clear reporting on spend, leads, and revenue — then we put more behind what's working.</p></div>
@@ -752,7 +748,9 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>Driven by Data.<br>Proven by Results.</h2>
     </div>
     <div class="stats">
+      <!-- Ad-spend ROAS stat hidden while focusing on website marketing. Uncomment to restore.
       <div class="stat reveal"><span class="num">3.8x</span><h3>Average ROAS</h3><p>Across campaigns focused on profitable, long-term growth.</p></div>
+      -->
       <div class="stat reveal"><span class="num">10,000+</span><h3>Leads Generated</h3><p>Systems built to attract, qualify, and convert the right customers.</p></div>
       <div class="stat reveal"><span class="num">$500K+</span><h3>Revenue Generated</h3><p>Combined client revenue through performance-driven marketing.</p></div>
     </div>
@@ -835,7 +833,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <div><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel"></div>
       <div class="full"><label for="f-svc">What are you interested in?</label>
         <select id="f-svc" name="service">
-          <option>Meta Ads</option><option>Website</option><option>CRM &amp; Automation</option><option>Not Sure Yet</option>
+          <!--<option>Meta Ads</option>--><option>Website</option><option>CRM &amp; Automation</option><option>Not Sure Yet</option>
         </select>
       </div>
       <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Tell us about your business and goals..."></textarea></div>
@@ -845,11 +843,12 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 </section>
 
 <footer>
-  <div class="wrap foot-brand"><a href="#top">
-    <img class="logo-dark" src="assets/aperio-lockup-dark-transparent.png" alt="Aperio Digital">
-    <img class="logo-light" src="assets/aperio-lockup-light.png" alt="Aperio Digital">
-  </a></div>
   <div class="wrap foot">
+    <a class="logo" href="#top">
+      <img class="logo-dark" src="assets/aperio-icon-glow-transparent-1024.png" alt="Aperio Digital">
+      <img class="logo-light" src="assets/aperio-icon-light-transparent-1024.png" alt="Aperio Digital">
+      <span class="logo-word">Aperio <em>Digital</em></span>
+    </a>
     <span>© 2026 Aperio Digital. All rights reserved.</span>
     <div class="socials">
       <a href="#" aria-label="TikTok">TikTok</a><a href="#" aria-label="Instagram">Instagram</a><a href="#" aria-label="Facebook">Facebook</a><a href="#" aria-label="X">X</a>
