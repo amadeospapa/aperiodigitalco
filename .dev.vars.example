@@ -1,0 +1,11 @@
+# Copy to .dev.vars for local testing with `npx wrangler pages dev .`
+# .dev.vars is git-ignored — the real keys never belong in the repo.
+# In production these are set in the Cloudflare Pages dashboard instead.
+
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
+TELEGRAM_TOKEN=1234567890:AAxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TELEGRAM_CHAT_ID=123456789
+
+# Optional. Defaults are amadeospapa@gmail.com and Resend's shared test sender.
+# LEAD_TO=amadeospapa@gmail.com
+# LEAD_FROM=Aperio Digital <leads@aperiodigital.co>

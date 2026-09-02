@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Aperio Digital icon — LIGHT theme (solid gold core, for white/print backgrounds) -->
+  <defs>
+    <radialGradient id="apCoreLight" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#F0C640"/>
+      <stop offset="100%" stop-color="#C99A22"/>
+    </radialGradient>
+  </defs>
+  <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M120,400 L256,90 L392,400"  stroke="#2E6BFF" stroke-width="15"/>
+    <path d="M162,400 L256,164 L350,400"  stroke="#3f78ff" stroke-width="13" opacity="0.8"/>
+    <path d="M204,400 L256,238 L308,400"  stroke="#5B8CFF" stroke-width="11" opacity="0.62"/>
+  </g>
+  <circle cx="256" cy="238" r="11" fill="url(#apCoreLight)"/>
+</svg>

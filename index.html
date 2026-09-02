@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Character encoding, so quotes, dashes, and the star glyphs render instead of turning into gibberish. -->
 <meta charset="UTF-8">
+<!-- Tells phones to render at their real width instead of zooming out a desktop layout. -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Text on the browser tab, and the clickable blue headline on a Google results page. -->
 <title>Aperio Digital — A Marketing Agency for Businesses</title>
+<!-- The grey summary Google prints under our result. Keep it under roughly 160 characters or it gets cut off. -->
 <meta name="description" content="Performance marketing built to generate leads, increase sales, and drive real business growth. Websites, CRM & automation. Greater Boston, MA.">
+<!-- Link preview card (texts, Facebook, LinkedIn): the bold title across the top. -->
 <meta property="og:title" content="Aperio Digital">
+<!-- Link preview card: the one line description under that title. -->
 <meta property="og:description" content="Performance marketing built to generate leads, increase sales, and drive real business growth.">
+<!-- Link preview card: tells platforms this is a plain website, not an article or a video. -->
 <meta property="og:type" content="website">
+<!-- Link preview card: the thumbnail image people see before they click. -->
 <meta property="og:image" content="assets/aperio-lockup-dark.png">
+<!-- Tab icon for older browsers that still expect a .ico file. -->
 <link rel="icon" href="assets/favicon.ico" sizes="any">
+<!-- Tab icon for modern browsers. The SVG stays sharp on any screen. -->
 <link rel="icon" type="image/svg+xml" href="assets/aperio-icon.svg">
+<!-- The icon used when someone saves the site to their iPhone home screen. -->
 <link rel="apple-touch-icon" href="assets/aperio-appicon-rounded-256.png">
+<!-- Opens the connection to Google Fonts early so the fonts arrive a beat sooner. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Same early handshake for the server that actually hands over the font files. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Loads our two typefaces: Space Grotesk for headings, Inter for body copy. -->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Runs before the page paints. Nothing on screen yet, so this has to stay in the head. -->
 <script>
-// Apply saved / preferred theme before paint to avoid a flash
+// Read the saved theme (or the visitor's system setting) and apply it before the page paints,
+// so nobody ever sees a flash of dark mode on the way to light mode.
 (function(){
   try{
     var saved=localStorage.getItem('theme');
@@ -25,7 +41,9 @@
   }catch(e){document.documentElement.setAttribute('data-theme','dark');}
 })();
 </script>
+<!-- All styling for the page lives here, ordered roughly the way the sections appear. -->
 <style>
+/* Dark mode palette, the default look. Every color below is referred to by these names, never by hex. */
 :root{
   --bg:#0B0E14; --surface:#11151D; --border:#232A36;
   --head:#F5F6F8; --body:#9AA3B2;
@@ -33,189 +51,268 @@
   --nav-bg:rgba(11,14,20,.95); --grain-opacity:.03;
   --display:'Space Grotesk',sans-serif; --sans:'Inter',sans-serif;
 }
+/* Light mode. Same variable names, different values, swapped in when the theme toggle says light. */
 :root[data-theme="light"]{
   --bg:#f0f3f6; --surface:#ffffff; --border:#E2E7EE;
   --head:#0B0E14; --body:#4B5563;
   --blue:#2E6BFF; --blue-dim:#1d4ed8; --gold:#A67C11;
   --nav-bg:rgba(246,248,251,.9); --grain-opacity:.02;
 }
+/* Reset: clears the browser defaults so our own spacing is the only spacing on the page. */
 *{margin:0;padding:0;box-sizing:border-box}
+/* Makes the nav links glide down the page instead of snapping to the section. */
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s ease,color .3s ease}
+/* Page wide defaults: background, body text color, base font, and a soft fade when the theme flips. */
+body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .3s ease,color .3s ease}
+/* The highlight color when a visitor drags to select text. */
 ::selection{background:var(--blue);color:#fff}
 
-/* grain */
+/* Fixed film grain layer sitting over the whole page for a bit of texture. Clicks pass straight through it. */
 .grain{position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:var(--grain-opacity);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
 
+/* Every heading on the page: display font, uppercase, tight line height. */
 h1,h2,h3{font-family:var(--display);color:var(--head);text-transform:uppercase;letter-spacing:-.01em;line-height:1.05}
+/* The centered content column. Every section puts its contents inside one of these. */
 .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+/* Generic 12 column grid, on hand for any layout that needs it. */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
 
+/* The small blue all caps label that sits above almost every section heading. */
 .eyebrow{font-family:var(--display);font-size:.78rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--blue)}
+/* Short gold divider line, used under eyebrows and headings. */
 .rule{width:56px;height:1px;background:var(--gold);margin:18px 0 26px}
 
+/* The shared button shape behind every call to action on the page. */
 .btn{display:inline-block;font-family:var(--display);font-weight:600;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;padding:16px 32px;border-radius:6px;text-decoration:none;transition:all .2s ease;cursor:pointer;border:1px solid transparent}
+/* Filled blue button: the primary "Request a Call" action. */
 .btn-solid{background:var(--blue);color:#fff}
 .btn-solid:hover{background:var(--blue-dim);transform:translateY(-2px)}
+/* Outlined button: the secondary action, turns gold on hover. */
 .btn-ghost{border-color:var(--border);color:var(--head)}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 
-/* nav */
+/* ===== NAV: the bar pinned to the top of the screen at every scroll position ===== */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+/* Added by JS past 50px of scroll. Frosted background so links stay legible over content. */
 nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom-color:var(--border)}
+/* The nav row itself: logo on the left, links in the middle, buttons on the right. */
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:76px}
-.logo{display:inline-flex;align-items:center;text-decoration:none}
-.logo img{height:70px;width:auto;display:block}
+/* Logo lockup in the top left: the icon plus the wordmark beside it. Never shrinks, so the links give way first. */
+.logo{display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}
+/* The icon PNG carries roughly 20% transparent padding on each side, so this negative margin pulls that dead
+   space back and lines the visible mark up with the content below. The logo does not change size. */
+.logo img{height:70px;width:auto;display:block;margin-left:-12px}
+/* Both logo files sit in the markup. These rules show the one that matches the current theme and hide the other. */
 .logo img.logo-light,.foot-brand img.logo-light{display:none}
 :root[data-theme="light"] .logo img.logo-dark,:root[data-theme="light"] .foot-brand img.logo-dark{display:none}
 :root[data-theme="light"] .logo img.logo-light,:root[data-theme="light"] .foot-brand img.logo-light{display:block}
 .logo span{color:var(--blue)}
+/* The "Aperio Digital" text next to the icon, gold with "Digital" picked out in blue. */
 .logo-word{font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;color:var(--gold);line-height:1;margin-left:6px;white-space:nowrap}
 .logo .logo-word em{font-style:normal;color:var(--blue)}
 @media(max-width:420px){.logo-word{font-size:1.05rem}}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{color:var(--body);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-family:var(--display);transition:color .2s}
+/* Desktop section links. Hidden under 1180px, where the burger menu takes over. */
+/* flex:1 makes the list absorb whatever room is left between the logo and the buttons, and space-between
+   splits it into identical gaps. The right margin is deliberately several times wider than those gaps, so the
+   "Request a Call" button reads as its own group instead of one more menu item. gap here is only a floor. */
+.nav-links{display:flex;flex:1;justify-content:space-between;gap:12px;list-style:none;margin-left:clamp(16px,2.5vw,32px);margin-right:clamp(32px,4.5vw,56px)}
+.nav-links a{color:var(--body);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-family:var(--display);transition:color .2s;white-space:nowrap}
 .nav-links a:hover{color:var(--head)}
+/* Slightly smaller button so "Request a Call" fits the height of the nav bar. */
 .nav-cta{font-size:.75rem;padding:12px 22px}
+/* The sun and moon button at the top right that switches light and dark. */
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid var(--border);border-radius:6px;width:44px;height:44px;cursor:pointer;color:var(--head);transition:border-color .2s,color .2s;flex-shrink:0}
 .theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
 .theme-toggle svg{width:18px;height:18px;display:block}
+/* Show the moon while we are in dark mode and the sun while we are in light mode, never both. */
 .theme-toggle .icon-sun{display:none}
 .theme-toggle .icon-moon{display:block}
 :root[data-theme="light"] .theme-toggle .icon-sun{display:block}
 :root[data-theme="light"] .theme-toggle .icon-moon{display:none}
-.nav-actions{display:flex;align-items:center;gap:16px}
+/* Keeps the nav CTA, the theme toggle, and the burger grouped together on the right. */
+.nav-actions{display:flex;align-items:center;gap:16px;flex-shrink:0}
+/* The three line mobile menu button. Only appears under 1180px wide. */
 .burger{display:none;background:none;border:1px solid var(--border);border-radius:6px;width:44px;height:44px;cursor:pointer;position:relative;z-index:210}
 .burger span{display:block;width:18px;height:2px;background:var(--head);margin:4px auto;transition:.3s}
+/* When the menu is open, the three lines fold into an X. */
 .burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+/* Full screen menu that covers the page once the burger is tapped. */
 .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:none;flex-direction:column;justify-content:center;padding:0 32px;gap:8px}
 .mobile-menu.open{display:flex}
 .mobile-menu a{font-family:var(--display);font-size:clamp(2rem,9vw,3rem);font-weight:700;text-transform:uppercase;color:var(--head);text-decoration:none;border-bottom:1px solid var(--border);padding:14px 0}
 .mobile-menu a:hover{color:var(--blue)}
 
-/* hero */
+/* ===== HERO: the first full screen a visitor lands on ===== */
 .hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;position:relative}
+/* Two decorative outline circles floating behind the right side of the hero. */
 .hero::after{content:"";position:absolute;top:15%;right:-10%;width:520px;height:520px;border:1px solid var(--border);border-radius:50%;pointer-events:none}
 .hero::before{content:"";position:absolute;top:25%;right:-2%;width:340px;height:340px;border:1px solid rgba(46,107,255,.25);border-radius:50%;pointer-events:none}
+/* The huge headline. The <em> inside it is the word we color blue. */
 .hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:700;margin:0 0 28px}
 .hero h1 em{font-style:normal;color:var(--blue)}
-.hero p.sub{font-size:1.15rem;max-width:560px;margin-bottom:36px}
+/* The supporting sentence sitting under the headline. */
+.hero p.sub{font-size:1.27rem;max-width:560px;margin-bottom:36px}
+/* Small gold pill above the headline that explains what "Aperio" means. */
 .chip{display:inline-block;font-family:var(--display);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--border);border-radius:100px;padding:8px 18px;margin-bottom:32px}
+/* The pair of hero buttons, allowed to wrap onto two lines on narrow phones. */
 .hero-btns{display:flex;gap:16px;flex-wrap:wrap}
 
-/* ticker */
+/* ===== TICKER: the thin scrolling word strip directly under the hero ===== */
 .ticker{border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:18px 0;white-space:nowrap}
+/* JS triples the content inside this, then the marquee slides it left forever with no visible seam. */
 .ticker-track{display:inline-block;animation:marquee 28s linear infinite}
 .ticker-track span{font-family:var(--display);font-weight:600;font-size:.9rem;letter-spacing:.3em;text-transform:uppercase;color:var(--head);margin-right:12px}
 .ticker-track .star{color:var(--gold)}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
+/* Default vertical breathing room for every section on the page. */
 section{padding:110px 0}
+/* The heading block (eyebrow, h2, intro line) that opens each section. */
 .sec-head{margin-bottom:64px}
 .sec-head h2{font-size:clamp(2rem,4.5vw,3.2rem);margin-top:14px}
 
-/* reveal */
+/* Fade and rise animation. JS adds .in the moment an element scrolls into view. */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .4s ease-out,transform .4s ease-out}
 .reveal.in{opacity:1;transform:none}
 
-/* stats */
+/* ===== STATS: the proof number cards, first thing below the ticker ===== */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+/* One stat card. */
 .stat{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:44px 36px}
+/* The big gold number that counts up when the card scrolls into view. */
 .stat .num{font-family:var(--display);font-weight:700;font-size:clamp(3rem,5.5vw,4.5rem);color:var(--gold);line-height:1;display:block;margin-bottom:14px}
 .stat h3{font-size:1rem;letter-spacing:.12em;margin-bottom:12px}
-.stat p{font-size:.9rem}
+.stat p{font-size:1.02rem}
 
-/* split */
+/* Two column layout, reused by "How We Drive Growth", the About section, and Contact. */
 .split{display:grid;grid-template-columns:7fr 5fr;gap:64px;align-items:center}
-.split p.big{font-size:1.3rem;line-height:1.7;color:var(--head);font-weight:400}
+.split p.big{font-size:1.42rem;line-height:1.7;color:var(--head);font-weight:400}
+/* The numbered service chips in the right column of "How We Drive Growth". */
 .tags{display:flex;flex-wrap:wrap;gap:10px}
 .tags span{border:1px solid var(--border);border-radius:6px;padding:10px 16px;font-size:.8rem;font-family:var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--body)}
 .tags span b{color:var(--blue);font-weight:600}
 
-/* who cards */
+/* ===== WHO WE WORK WITH: the audience cards, same card style reused for the About values ===== */
 .who{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+/* Bordered surface card. The border lights up blue on hover. */
 .card{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:36px;transition:border-color .25s}
 .card:hover{border-color:var(--blue)}
+/* The small gold "/ 01" counter at the top of each card. */
 .card .idx{font-family:var(--display);color:var(--gold);font-size:.8rem;letter-spacing:.2em;display:block;margin-bottom:18px}
 .card h3{font-size:1.15rem;margin-bottom:12px;letter-spacing:.04em}
-.card p{font-size:.92rem}
+.card p{font-size:1.04rem}
 
-/* pricing */
+/* ===== SERVICES & PRICING: package cards, the ownership banner, and the automation panel ===== */
 .price-intro{max-width:720px}
+/* The row of package cards. Turns into a sideways swipe carousel on mobile. */
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;margin-top:48px}
+/* A single pricing package card. */
 .plan{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:36px 30px;display:flex;flex-direction:column;position:relative}
+/* The card we are steering people toward gets a blue border. */
 .plan.popular{border-color:var(--blue)}
+/* The "Most Popular" tag pinned to the top edge of that card. */
 .badge{position:absolute;top:-13px;left:30px;background:var(--blue);color:#fff;font-family:var(--display);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:6px 14px;border-radius:4px}
 .plan h3{font-size:1.05rem;letter-spacing:.06em;margin-bottom:16px}
+/* The package price, with its billing note underneath in gold. */
 .price{font-family:var(--display);font-weight:700;font-size:2.2rem;color:var(--head);line-height:1.1}
 .price small{display:block;font-size:.85rem;font-weight:500;color:var(--gold);margin-top:6px;letter-spacing:.05em}
-.plan .desc{font-size:.88rem;margin:18px 0 8px}
+.plan .desc{font-size:1rem;margin:18px 0 8px}
 .plan ul{list-style:none;margin:18px 0 26px;flex:1}
-.plan li{font-size:.85rem;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid rgba(35,42,54,.5)}
+.plan li{font-size:.97rem;padding:7px 0 7px 22px;position:relative;border-bottom:1px solid rgba(35,42,54,.5)}
+/* The blue arrow standing in front of every feature line. */
 .plan li::before{content:"→";position:absolute;left:0;color:var(--blue);font-size:.8rem}
+/* The small print at the bottom of a package card. */
 .plan .fine{font-size:.72rem;color:#6b7484;margin-bottom:20px;line-height:1.5}
 .plan .btn{text-align:center}
+/* Wide "Complete Website Ownership" banner that sits under the three package cards. */
 .own-banner{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px 40px;margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
 .own-banner .own-info{flex:1;min-width:280px}
 .own-banner h3{font-size:1.05rem;letter-spacing:.06em;margin-bottom:8px}
-.own-banner p{font-size:.88rem;color:var(--body);max-width:640px}
+.own-banner p{font-size:1rem;color:var(--body);max-width:640px}
 .own-banner .own-side{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
 .own-banner .own-price{font-family:var(--display);font-size:1.9rem;font-weight:700;white-space:nowrap}
 .own-banner .own-price small{display:block;font-size:.72rem;font-weight:400;color:#6b7484;letter-spacing:0}
 .own-banner .btn{white-space:nowrap}
+/* Smaller heading block used to introduce a group of packages part way through a section. */
 .subhead{margin:100px 0 0}
 .subhead h3{font-size:clamp(1.5rem,3vw,2.2rem);margin-top:12px}
 .subhead p{max-width:700px;margin-top:16px}
 
-/* crm strip */
+/* ===== CRM panel: the bordered box that closes out the Services section ===== */
 .crm{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:56px 48px;margin-top:100px}
+/* The four gold topped capability headings inside the CRM panel. */
 .crm-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin:36px 0}
 .crm-cols h3{font-size:.9rem;letter-spacing:.1em;padding-top:16px;border-top:1px solid var(--gold)}
-.crm p.note{font-size:.9rem;max-width:820px}
+.crm p.note{font-size:1.02rem;max-width:820px}
 
-/* results */
+/* ===== RESULTS: the proof numbers again, plus three case study placeholders ===== */
 .results-band{text-align:left}
 .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+/* A case study card, holding the space until real client numbers land. */
 .case{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
 .case .metric{font-family:var(--display);font-weight:700;font-size:2rem;color:var(--blue)}
-.case p{font-size:.85rem;margin-top:10px}
+.case p{font-size:.97rem;margin-top:10px}
 
-/* portfolio */
+/* ===== PORTFOLIO: live previews of client sites, built by JS at the bottom of this file ===== */
 .pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+/* One portfolio entry: the live preview on top, name and link underneath. */
 .pf-card{border:1px solid var(--border);border-radius:8px;background:var(--surface);overflow:hidden;transition:border-color .25s}
 .pf-card:hover{border-color:var(--gold)}
+/* Fixed 16:10 window that the shrunken live site gets cropped into. */
 .pf-frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#000;border-bottom:1px solid var(--border)}
+/* The real site, loaded at desktop width and then scaled down by JS to fit the frame. */
 .pf-frame iframe{position:absolute;top:0;left:0;width:1280px;height:800px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+/* Invisible click layer over the preview. Darkens and reveals "Visit Site" on hover. */
 .pf-frame .pf-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(11,14,20,0);transition:background .25s;text-decoration:none}
 .pf-frame .pf-overlay span{opacity:0;transform:translateY(8px);transition:.25s;font-family:var(--display);font-weight:600;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--blue);padding:14px 26px;border-radius:6px}
 .pf-card:hover .pf-overlay{background:rgba(11,14,20,.55)}
 .pf-card:hover .pf-overlay span{opacity:1;transform:none}
+/* The caption bar under each preview: business name, category tag, and domain. */
 .pf-meta{display:flex;align-items:center;justify-content:space-between;padding:22px 26px;gap:16px}
 .pf-meta h3{font-size:1rem;letter-spacing:.06em}
 .pf-meta .pf-tag{font-family:var(--display);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
 .pf-meta a{color:var(--body);text-decoration:none;font-size:.8rem;white-space:nowrap}
 .pf-meta a:hover{color:var(--blue)}
 
-/* about */
+/* ===== ABOUT: the three value cards under the About copy ===== */
+/* The three value cards below the About copy. */
 .values{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
 
-/* contact */
+/* ===== CONTACT: the form and contact details in the last section ===== */
+/* Contact copy on the left, form on the right. Stacks into one column on mobile. */
 .contact-grid{display:grid;grid-template-columns:5fr 7fr;gap:64px}
+/* The form is a two column grid, and .full makes a field span both columns. */
 form{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 form .full{grid-column:1/-1}
+/* The small uppercase labels above each field. */
 label{display:block;font-family:var(--display);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--head);margin-bottom:8px}
-input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--head);font-family:var(--sans);font-size:.95rem;padding:14px 16px;transition:border-color .2s}
+/* Shared field styling. The border turns blue while a field has focus. */
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--head);font-family:var(--sans);font-size:1.07rem;padding:14px 16px;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
+/* Example text sits dimmer than real input. Firefox adds its own opacity, so set it explicitly. */
+input::placeholder,textarea::placeholder{color:var(--body);opacity:.6}
+/* The unchosen prompt in the service dropdown, dimmed to match. */
+select:has(option[value=""]:checked){color:var(--body)}
 textarea{min-height:130px;resize:vertical}
-.contact-info{margin-top:36px;display:flex;flex-direction:column;gap:10px;font-size:.95rem}
+/* Honeypot field. Pushed off screen rather than display:none, because some bots
+   skip anything that is outright hidden. Real visitors never see or tab into it. */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+/* The line under the submit button that reports how the send went. */
+.form-status{font-size:1.02rem;line-height:1.5;min-height:1.4em;margin:0}
+.form-status.ok{color:var(--blue)}
+.form-status.err{color:#e5534b}
+/* Dim the button while the message is in flight so it reads as busy, not broken. */
+button[disabled]{opacity:.6;cursor:progress}
+/* Email address and location listed under the contact copy. */
+.contact-info{margin-top:36px;display:flex;flex-direction:column;gap:10px;font-size:1.07rem}
 .contact-info a{color:var(--head);text-decoration:none}
 .contact-info a:hover{color:var(--blue)}
 .contact-info .gold{color:var(--gold)}
 
-/* footer */
+/* ===== FOOTER: logo, copyright, socials, and legal links at the very bottom ===== */
 footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px 28px;font-size:.82rem}
 .foot .logo{margin-right:auto}
@@ -224,42 +321,50 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 .foot .links{display:flex;gap:24px}
 .foot a{color:var(--body);text-decoration:none}
 .foot a:hover{color:var(--head)}
+/* The four outlined social buttons in the footer. */
 .socials{display:flex;gap:14px}
 .socials a{border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:var(--display);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--body);text-decoration:none}
 .socials a:hover{border-color:var(--gold);color:var(--gold)}
 
-/* industries strip */
+/* ===== INDUSTRIES MARQUEE: the pill strip between the audience cards and the pain points ===== */
 .ind{border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:20px 0;white-space:nowrap;background:var(--surface)}
 .ind-track{display:inline-block;animation:marquee 46s linear infinite}
 .ind-track span{display:inline-block;font-family:var(--display);font-weight:500;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--body);border:1px solid var(--border);border-radius:100px;padding:9px 20px;margin:0 6px}
 .ind-track span i{color:var(--gold);font-style:normal}
 
-/* problem / pain */
+/* ===== PAIN POINTS: the "Where Most Businesses Lose Customers" card grid ===== */
 .pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .pain{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px;transition:border-color .25s}
 .pain:hover{border-color:var(--gold)}
+/* The small bordered square holding each pain point icon. */
 .pico{width:46px;height:46px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--blue)}
 .pico svg{width:22px;height:22px}
 .pain h3{font-size:1.02rem;margin-bottom:10px;letter-spacing:.03em}
-.pain p{font-size:.9rem}
+.pain p{font-size:1.02rem}
+/* The closing line under the pain grid that turns the problems into a reason to call. */
 .pain-foot{margin-top:44px;font-family:var(--display);font-size:clamp(1.1rem,2.2vw,1.5rem);color:var(--head);font-weight:500;letter-spacing:-.01em;line-height:1.4}
 .pain-foot b{color:var(--blue)}
 
-/* estimator */
+/* ===== ESTIMATOR: the interactive pricing builder visitors click through ===== */
 .est-grid{display:grid;grid-template-columns:7fr 5fr;gap:40px;margin-top:48px;align-items:start}
+/* One question in the estimator, such as Website or Add-Ons. */
 .est-group{margin-bottom:34px}
 .est-group>.eyebrow{display:block;margin-bottom:16px}
 .opt-row{display:flex;flex-wrap:wrap;gap:12px}
+/* A clickable option tile. The .sel class marks the visitor current pick. */
 .opt{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:16px 18px;cursor:pointer;transition:border-color .2s,background .2s;flex:1 1 150px;min-width:140px}
 .opt:hover{border-color:var(--blue)}
 .opt.sel{border-color:var(--blue);background:rgba(46,107,255,.09)}
 .opt .on{display:block;font-family:var(--display);font-weight:600;font-size:.9rem;color:var(--head);letter-spacing:.02em;margin-bottom:6px}
 .opt .op{font-size:.8rem;color:var(--gold);font-family:var(--display);letter-spacing:.03em}
+/* The running total panel. It sticks to the screen while the options scroll past it. */
 .est-panel{border:1px solid var(--blue);border-radius:10px;background:var(--surface);padding:32px 30px;position:sticky;top:100px}
 .est-panel h3{font-size:1rem;letter-spacing:.1em;margin-bottom:6px}
 .est-panel .pnote{font-size:.82rem;margin-bottom:22px}
-.est-line{display:flex;justify-content:space-between;gap:16px;font-size:.86rem;padding:11px 0;border-bottom:1px solid rgba(35,42,54,.5);color:var(--body)}
+/* One chosen item and its price inside the totals panel. */
+.est-line{display:flex;justify-content:space-between;gap:16px;font-size:.98rem;padding:11px 0;border-bottom:1px solid rgba(35,42,54,.5);color:var(--body)}
 .est-line span:last-child{color:var(--head);font-family:var(--display);font-weight:500;white-space:nowrap}
+/* The Setup and Monthly totals at the bottom of the panel. */
 .est-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px;padding-top:16px;border-top:1px solid var(--gold)}
 .est-total.sub{border-top:1px solid var(--border)}
 .est-total .lab{font-family:var(--display);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--body)}
@@ -268,45 +373,109 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 .est-panel .btn{width:100%;text-align:center;margin-top:24px;border:none}
 .est-fine{font-size:.72rem;color:#6b7484;margin-top:16px;line-height:1.5}
 
-/* process */
+/* ===== PROCESS: the six numbered "how it works" step cards ===== */
 .proc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+/* One process step card. */
 .step{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px;transition:border-color .25s}
 .step:hover{border-color:var(--blue)}
+/* The big gold step number. */
 .step .snum{font-family:var(--display);font-weight:700;font-size:2.4rem;color:var(--gold);line-height:1;display:block;margin-bottom:8px}
+/* The blue timing label under it: "Day 1", "Week 1", and so on. */
 .step .swhen{font-family:var(--display);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:14px}
 .step h3{font-size:1.05rem;margin-bottom:10px;letter-spacing:.03em}
-.step p{font-size:.88rem}
+.step p{font-size:1rem}
 
-/* testimonials */
+/* ===== TESTIMONIALS: review cards, placeholders until real client quotes come in ===== */
 .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+/* One testimonial card. */
 .tst{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:34px 30px;display:flex;flex-direction:column}
 .tst .stars{color:var(--gold);letter-spacing:.2em;margin-bottom:18px;font-size:.9rem}
-.tst .quote{font-size:.96rem;color:var(--body);line-height:1.7;flex:1;font-style:italic}
+.tst .quote{font-size:1.08rem;color:var(--body);line-height:1.7;flex:1;font-style:italic}
 .tst .who{display:flex;align-items:center;gap:14px;margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+/* Round avatar circle, holding a star until there are real client photos. */
 .tst .av{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--gold);flex-shrink:0}
 .tst .who b{display:block;color:var(--head);font-family:var(--display);font-size:.9rem;letter-spacing:.03em}
 .tst .who span{font-size:.8rem;color:var(--body)}
 
-/* portfolio "more coming soon" banner */
+/* ===== "More Projects in the Works" banner sitting under the portfolio grid ===== */
 .pf-more{margin-top:32px;border:1px dashed var(--border);border-radius:8px;background:var(--surface);padding:38px 40px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;transition:border-color .25s}
 .pf-more:hover{border-color:var(--gold)}
 .pf-more .pf-more-txt{max-width:640px}
 .pf-more .pf-dots{display:inline-flex;gap:7px;margin-bottom:14px}
+/* Three gold dots that pulse in sequence to suggest work in progress. */
 .pf-more .pf-dots i{width:9px;height:9px;border-radius:50%;background:var(--gold);opacity:.35;animation:pfpulse 1.4s ease-in-out infinite}
 .pf-more .pf-dots i:nth-child(2){animation-delay:.2s}
 .pf-more .pf-dots i:nth-child(3){animation-delay:.4s}
 @keyframes pfpulse{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
 .pf-more h3{font-size:1.25rem;letter-spacing:.02em;margin-bottom:8px}
-.pf-more p{font-size:.92rem}
+.pf-more p{font-size:1.04rem}
 .pf-more .btn{white-space:nowrap;flex-shrink:0}
 @media(max-width:640px){.pf-more{flex-direction:column;align-items:flex-start;text-align:left}}
 
-@media(max-width:900px){
+/* ===== WHAT'S INCLUDED: the five flip cards sitting between pricing and the estimator ===== */
+/* Six column track, and every card spans two of them. That gives three across the top,
+   and pushing the last two in by one column centres them underneath. */
+.inc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:24px}
+.inc-card{grid-column:span 2;height:378px;perspective:1400px;cursor:pointer}
+.inc-card:nth-child(4){grid-column:2/4}
+.inc-card:nth-child(5){grid-column:4/6}
+/* The element that actually rotates. Both faces are stacked inside it. */
+.inc-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,.2,.2,1)}
+/* Hover only where a real pointer exists, so a phone never gets stuck mid-flip. */
+@media(hover:hover){.inc-card:hover .inc-inner{transform:rotateY(180deg)}}
+/* .flipped is set by tap, :focus-visible covers keyboard users tabbing through. */
+.inc-card.flipped .inc-inner,.inc-card:focus-visible .inc-inner{transform:rotateY(180deg)}
+.inc-card:focus{outline:none}
+/* Both sides share the card surface. backface-visibility stops the hidden side showing through. */
+.inc-face{position:absolute;inset:0;border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:34px 30px;display:flex;flex-direction:column;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:border-color .3s,box-shadow .3s}
+/* The highlight: border lights up blue and the card lifts off the page. */
+.inc-card:hover .inc-face,.inc-card.flipped .inc-face,.inc-card:focus-visible .inc-face{border-color:var(--blue);box-shadow:0 22px 45px -28px var(--blue)}
+/* Front: icon and name at the top, one line of plain English, and the nudge
+   pinned to the bottom edge by the auto margin so every card reads the same. */
+.inc-front{justify-content:flex-start}
+.inc-icon{color:var(--blue);line-height:0;margin-bottom:24px}
+.inc-front h3{font-size:1.4rem;letter-spacing:.04em;margin-bottom:12px}
+.inc-front p{font-size:1rem;line-height:1.55}
+.inc-hint{font-family:var(--display);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:auto}
+/* Back: pre-rotated so it reads the right way round once the card turns. */
+.inc-back{transform:rotateY(180deg);overflow-y:auto}
+.inc-back .inc-label{font-family:var(--display);font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.inc-back ul{list-style:none}
+.inc-back li{font-size:.97rem;line-height:1.45;color:var(--body);padding:8px 0 8px 20px;position:relative;border-bottom:1px solid var(--border)}
+.inc-back li:last-child{border-bottom:none}
+/* Same blue arrow the pricing cards use in front of every feature line. */
+.inc-back li::before{content:"\2192";position:absolute;left:0;top:8px;color:var(--blue);font-size:.78rem}
+/* Two per row once three no longer fit, with the odd fifth card running full width. */
+@media(max-width:1040px){
+  .inc-grid{grid-template-columns:repeat(2,1fr)}
+  .inc-card,.inc-card:nth-child(4){grid-column:span 1}
+  .inc-card:nth-child(5){grid-column:1/-1}
+}
+/* Single column on phones. Taller, because the lists wrap onto more lines. */
+@media(max-width:640px){
+  .inc-grid{gap:18px}
+  .inc-card,.inc-card:nth-child(4),.inc-card:nth-child(5){grid-column:1/-1;height:420px}
+  .inc-face{padding:28px 24px}
+}
+/* Very narrow phones wrap the longest list onto more lines again, so give it more room. */
+@media(max-width:360px){
+  .inc-card,.inc-card:nth-child(4),.inc-card:nth-child(5){height:455px}
+}
+/* Honour a system setting that asks for less movement: swap the flip for a plain cut. */
+@media(prefers-reduced-motion:reduce){.inc-inner{transition-duration:.01ms}}
+
+/* ===== Tablet and phone layout: nearly everything collapses to a single column below 900px ===== */
+/* The seven links plus the logo and the buttons need roughly 1180px to sit comfortably. Below that the
+   burger menu takes over, which is why this nav breakpoint is wider than the layout one underneath it. */
+@media(max-width:1180px){
   .nav-links,.nav-cta{display:none}
+  .burger{display:block}
+}
+
+@media(max-width:900px){
   .pain-grid,.proc,.tst-grid{grid-template-columns:1fr}
   .est-grid{grid-template-columns:1fr}
   .est-panel{position:static}
-  .burger{display:block}
   .split,.contact-grid{grid-template-columns:1fr;gap:40px}
   .stats,.case-grid,.values{grid-template-columns:1fr}
   .who,.pf-grid{grid-template-columns:1fr}
@@ -320,15 +489,23 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 </style>
 </head>
 <body>
+<!-- Film grain texture stretched over the entire page. Purely decorative, ignores clicks. -->
 <div class="grain"></div>
 
+<!-- ===== NAV: fixed to the top of the window, visible on every part of the page ===== -->
 <nav id="nav">
+  <!-- The nav row: logo left, section links middle, buttons right. -->
   <div class="wrap nav-inner">
+    <!-- Top left logo. Clicking it jumps back up to the hero. -->
     <a class="logo" href="#top">
+      <!-- Glow version of the icon, shown while the site is in dark mode. -->
       <img class="logo-dark" src="assets/aperio-icon-glow-transparent-1024.png" alt="Aperio Digital">
+      <!-- Light background version, swapped in when the theme is light. -->
       <img class="logo-light" src="assets/aperio-icon-light-transparent-1024.png" alt="Aperio Digital">
+      <!-- The wordmark beside the icon: "Aperio" in gold, "Digital" in blue. -->
       <span class="logo-word">Aperio <em>Digital</em></span>
     </a>
+    <!-- Desktop section links. Hidden on phones, where the burger menu below takes over. -->
     <ul class="nav-links">
       <li><a href="#top">Home</a></li>
       <li><a href="#services">Services &amp; Pricing</a></li>
@@ -338,16 +515,23 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <!-- Right hand side of the nav: main CTA, theme switch, and the mobile burger. -->
     <div class="nav-actions">
+    <!-- The main call to action, always one tap away no matter how far down the page they are. -->
     <a class="btn btn-solid nav-cta" href="#contact">Request a Call</a>
+    <!-- Light and dark switch. The choice is saved in localStorage for their next visit. -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode" title="Toggle theme">
+      <!-- Moon icon, on screen while the site is in dark mode. -->
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <!-- Sun icon, on screen while the site is in light mode. -->
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path></svg>
     </button>
+    <!-- Burger button. Only shows up on screens under 1180px wide. -->
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
+<!-- Full screen mobile menu. Hidden until the burger is tapped, and closes itself on any link. -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#top">Home</a>
   <a href="#services">Services &amp; Pricing</a>
@@ -358,13 +542,20 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   <a href="#contact">Contact</a>
 </div>
 
+<!-- ===== HERO: the first screen visitors land on, top of the page ===== -->
 <header class="hero" id="top">
   <div class="wrap">
+    <!-- Small blue label above the headline. -->
     <span class="eyebrow">Performance Marketing Agency</span>
+    <!-- Short gold divider between the label and the headline. -->
     <div class="rule"></div>
+    <!-- Gold pill spelling out what "Aperio" means. -->
     <span class="chip">Aperio · Latin: "I Open, I Reveal"</span>
+    <!-- The main headline, the largest text anywhere on the site. -->
     <h1>A Marketing<br>Agency for<br><em>Businesses</em></h1>
+    <!-- One sentence saying what we do, directly under the headline. -->
     <p class="sub">Performance marketing built to generate leads, increase sales, and drive real business growth through proven strategy and data-backed execution.</p>
+    <!-- The two hero buttons: book a call, or jump down to the results section. -->
     <div class="hero-btns">
       <a class="btn btn-solid" href="#contact">Request a Call</a>
       <a class="btn btn-ghost" href="#results">View Results</a>
@@ -372,63 +563,82 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </header>
 
+<!-- ===== TICKER: the thin scrolling strip immediately below the hero ===== -->
 <div class="ticker">
+  <!-- JS copies this content twice more so the marquee loops without a gap. -->
   <div class="ticker-track" id="ticker">
     <span>Leads <i class="star">★</i> Sales <i class="star">★</i> Growth <i class="star">★</i> Results <i class="star">★</i> Strategy <i class="star">★</i> Performance <i class="star">★</i>&nbsp;</span>
   </div>
 </div>
 
+<!-- ===== STATS: the headline proof numbers, first section under the ticker ===== -->
 <section>
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Proof of Performance</span>
       <h2>Driven by Data.<br>Proven by Results.</h2>
     </div>
+    <!-- The stat cards. Each number counts up from zero the first time it scrolls into view. -->
     <div class="stats">
       <!-- Ad-spend ROAS stat hidden while focusing on website marketing. Uncomment to restore.
       <div class="stat reveal"><span class="num" data-count="3.8" data-suffix="x">0x</span><h3>Average ROAS</h3><p>Consistent return on ad spend across campaigns focused on profitable growth and long-term performance.</p></div>
       -->
+      <!-- Leads stat. data-count is the target the count up animation climbs to. -->
       <div class="stat reveal"><span class="num" data-count="10000" data-suffix="+">0+</span><h3>Leads Generated</h3><p>High-quality lead generation systems built to attract, qualify, and convert the right customers.</p></div>
+      <!-- Revenue stat. data-prefix and data-suffix wrap the number so it reads as $500K+. -->
       <div class="stat reveal"><span class="num" data-count="500" data-prefix="$" data-suffix="K+">$0K+</span><h3>Revenue Generated</h3><p>Total combined revenue generated across client campaigns through performance-driven marketing and optimized ad strategy.</p></div>
     </div>
   </div>
 </section>
 
+<!-- ===== HOW WE DRIVE GROWTH: the two column pitch sitting under the stats ===== -->
 <section style="padding-top:0">
+  <!-- Copy on the left, the numbered service chips on the right. -->
   <div class="wrap split">
     <div class="reveal">
       <span class="eyebrow">How We Drive Growth</span>
       <div class="rule"></div>
+      <!-- Lead paragraph, set larger than normal body text. -->
       <p class="big">At Aperio Digital, we combine clear strategy, data-driven decisions, and strong execution to help businesses generate qualified leads, increase sales, and build marketing systems that perform.</p>
       <p style="margin-top:20px">From custom websites to CRM, email, and SMS automation, our focus is creating real growth that can be tracked, improved, and scaled.</p>
     </div>
+    <!-- Six numbered chips listing what we actually build. -->
     <div class="tags reveal">
       <span><b>01</b> Custom Websites</span><span><b>02</b> CRM Systems</span><span><b>03</b> Email Automation</span><span><b>04</b> SMS Follow-Up</span><span><b>05</b> Lead Tracking</span><span><b>06</b> Reporting</span>
     </div>
   </div>
 </section>
 
+<!-- ===== WHO WE WORK WITH: four cards naming the kinds of businesses we serve ===== -->
 <section style="padding-top:0">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Who We Work With</span>
       <h2>Built for Businesses<br>Ready to Grow</h2>
     </div>
+    <!-- Two by two card grid of our audiences. -->
     <div class="who">
+      <!-- Card 1: local service trades, our bread and butter. -->
       <div class="card reveal"><span class="idx">/ 01</span><h3>Local Service Businesses</h3><p>Pressure washing, cleaning, detailing, landscaping, gutters, tinting, fencing, and other service-based businesses looking for more leads and booked jobs.</p></div>
+      <!-- Card 2: online stores and product brands. -->
       <div class="card reveal"><span class="idx">/ 02</span><h3>Online &amp; Product Brands</h3><p>Online stores, eCommerce brands, product-based businesses, and companies looking to increase sales through better websites and marketing systems.</p></div>
+      <!-- Card 3: contractors, where a single new customer is worth a lot. -->
       <div class="card reveal"><span class="idx">/ 03</span><h3>Contractors &amp; Home Services</h3><p>Roofing, HVAC, remodeling, construction, real estate services, and businesses where each new customer can create strong revenue growth.</p></div>
+      <!-- Card 4: the catch all, so nobody rules themselves out. -->
       <div class="card reveal"><span class="idx">/ 04</span><h3>Any Business With Growth Goals</h3><p>Restaurants, gyms, personal brands, local companies, and other businesses that need stronger websites or more consistent customer flow.</p></div>
     </div>
   </div>
 </section>
 
+<!-- ===== INDUSTRIES MARQUEE: pill strip between the audience cards and the pain points ===== -->
 <div class="ind">
+  <!-- Tripled by JS as well, same seamless loop trick as the ticker above. -->
   <div class="ind-track" id="indTrack">
     <span>Pressure Washing <i>★</i></span><span>Roofing <i>★</i></span><span>HVAC <i>★</i></span><span>Landscaping <i>★</i></span><span>Cleaning Services <i>★</i></span><span>Auto Detailing <i>★</i></span><span>Remodeling <i>★</i></span><span>Fencing <i>★</i></span><span>Window Tinting <i>★</i></span><span>Gutters <i>★</i></span><span>Real Estate <i>★</i></span><span>Restaurants <i>★</i></span><span>Gyms &amp; Studios <i>★</i></span><span>eCommerce Brands <i>★</i></span><span>Contractors <i>★</i></span>
   </div>
 </div>
 
+<!-- ===== PAIN POINTS: "Where Most Businesses Lose Customers", the problems we fix ===== -->
 <section>
   <div class="wrap">
     <div class="sec-head reveal">
@@ -436,7 +646,9 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>Where Most Businesses<br>Lose Customers</h2>
       <p style="margin-top:16px;max-width:640px">If any of these sound like your business, you're leaving leads and revenue on the table — and every one of them is fixable.</p>
     </div>
+    <!-- The problem cards. Each one is an icon, a heading, and a single plain sentence. -->
     <div class="pain-grid">
+      <!-- Pain 1: a slow or dated site that loses people before they ever call. -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg></div>
         <h3>Outdated or Slow Website</h3>
@@ -449,31 +661,37 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <p>Money going out to boosted posts and campaigns with no clear tracking on what actually brings in customers.</p>
       </div>
       -->
+      <!-- Pain 2: leads sitting unanswered while a faster competitor books the job. -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
         <h3>Slow Lead Response</h3>
         <p>Inquiries sit for hours while a faster competitor replies first and wins the job you should have booked.</p>
       </div>
+      <!-- Pain 3: no automatic follow up, so warm leads quietly go cold. -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 18z"></path><path d="M8 9h8M8 12h5"></path></svg></div>
         <h3>No Follow-Up System</h3>
         <p>Leads go cold because there's no consistent, automated follow-up keeping your business top of mind.</p>
       </div>
+      <!-- Pain 4: invisible in local search when nearby customers go looking. -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"></path><circle cx="12" cy="11" r="2.5"></circle></svg></div>
         <h3>Weak Local Visibility</h3>
         <p>Buried below competitors when nearby customers search for exactly what you offer.</p>
       </div>
+      <!-- Pain 5: hours a week burned on admin that could run itself. -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg></div>
         <h3>Manual Busywork</h3>
         <p>Hours lost every week to confirmations, reminders, and data entry that could run automatically.</p>
       </div>
     </div>
+    <!-- The closing line that turns the list of problems into a reason to get in touch. -->
     <p class="pain-foot reveal">The result? <b>The next customer searching for what you do ends up calling a competitor.</b></p>
   </div>
 </section>
 
+<!-- ===== SERVICES & PRICING: packages, the buy it outright banner, and the automation panel ===== -->
 <section id="services" style="border-top:1px solid var(--border)">
   <div class="wrap">
     <div class="sec-head reveal price-intro">
@@ -569,12 +787,15 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     </div>
     ===== END META ADVERTISING PACKAGES ===== -->
 
+    <!-- Intro heading for the website packages below. -->
     <div class="subhead reveal">
       <span class="eyebrow" style="color:var(--gold)">Website Development Packages</span>
       <h3>Custom Websites Designed<br>Around Your Business Goals</h3>
       <p>Every package includes a mobile-optimized design, SEO-focused structure, contact forms, and ongoing support to keep your site running smoothly.</p>
     </div>
+    <!-- The three website packages. Side by side on desktop, swipeable on mobile. -->
     <div class="plans">
+      <!-- Package 1: entry level build for small service businesses. -->
       <div class="plan reveal">
         <h3>Essential</h3>
         <div class="price">$500<small>build + $50/mo</small></div>
@@ -591,6 +812,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         </ul>
         <a class="btn btn-ghost" href="#contact">Request a Call</a>
       </div>
+      <!-- Package 2: the highlighted middle tier we point most people toward. -->
       <div class="plan popular reveal">
         <span class="badge">Most Popular</span>
         <h3>Growth</h3>
@@ -607,6 +829,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         </ul>
         <a class="btn btn-solid" href="#contact">Request a Call</a>
       </div>
+      <!-- Package 3: top tier with booking, automation, and a CRM connected pipeline. -->
       <div class="plan reveal">
         <h3>Elite</h3>
         <div class="price">$900<small>build + $99/mo</small></div>
@@ -625,6 +848,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       </div>
     </div>
 
+    <!-- Wide banner under the packages: pay once, own the site, no monthly fee. -->
     <div class="own-banner reveal">
       <div class="own-info">
         <h3>Complete Website Ownership</h3>
@@ -636,9 +860,11 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       </div>
     </div>
 
+    <!-- CRM, email, and SMS automation panel that closes out the Services section. -->
     <div class="crm reveal">
       <span class="eyebrow">CRM, Email &amp; SMS Automation</span>
       <h3 style="font-size:clamp(1.4rem,2.8vw,2rem);margin-top:14px">Respond Faster. Follow Up Automatically.<br>Never Lose a Lead.</h3>
+      <!-- Four capability headings across the panel. -->
       <div class="crm-cols">
         <div><h3>Automated Lead Follow-Ups</h3></div>
         <div><h3>CRM Lead Organization</h3></div>
@@ -651,6 +877,126 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </section>
 
+<!-- ===== WHAT'S INCLUDED: five cards that flip on hover to reveal what each piece covers ===== -->
+<section id="included" style="border-top:1px solid var(--border)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What's Included</span>
+      <h2>Everything Your<br>Business Needs</h2>
+      <p style="margin-top:16px;max-width:640px">Every package is built from the same five pieces. Hover a card — or tap it on your phone — to see exactly what that piece covers.</p>
+    </div>
+    <div class="inc-grid">
+      <!-- Website: front shows the icon, the back carries the detail. -->
+      <div class="inc-card reveal" tabindex="0" role="button" aria-expanded="false" aria-label="Website — show what is included">
+        <div class="inc-inner">
+          <div class="inc-face inc-front">
+            <span class="inc-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+            <h3>Website</h3>
+            <p>The storefront that keeps working every hour you are not.</p>
+            <span class="inc-hint">What’s included &rarr;</span>
+          </div>
+          <div class="inc-face inc-back">
+            <span class="inc-label">Included</span>
+            <ul>
+            <li>Mobile-friendly, fast-loading design</li>
+            <li>Service pages for everything you offer</li>
+            <li>Photo galleries of your work</li>
+            <li>Contact information &amp; quote request forms</li>
+            <li>SEO-ready structure from day one</li>
+            <li>Works 24/7 — even while you sleep</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Email: front shows the icon, the back carries the detail. -->
+      <div class="inc-card reveal" tabindex="0" role="button" aria-expanded="false" aria-label="Email — show what is included">
+        <div class="inc-inner">
+          <div class="inc-face inc-front">
+            <span class="inc-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2.5 7 9.5 6 9.5-6"/></svg></span>
+            <h3>Email</h3>
+            <p>A professional address on your own domain, set up properly.</p>
+            <span class="inc-hint">What’s included &rarr;</span>
+          </div>
+          <div class="inc-face inc-back">
+            <span class="inc-label">Included</span>
+            <ul>
+            <li>Domain registration guidance</li>
+            <li>Domain configuration</li>
+            <li>Professional email setup</li>
+            <li>Email forwarding</li>
+            <li>Business account organization</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Lead Gen: front shows the icon, the back carries the detail. -->
+      <div class="inc-card reveal" tabindex="0" role="button" aria-expanded="false" aria-label="Lead Gen — show what is included">
+        <div class="inc-inner">
+          <div class="inc-face inc-front">
+            <span class="inc-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18l-7.5 8.5V20l-3 1.5v-9L3 4Z"/></svg></span>
+            <h3>Lead Gen</h3>
+            <p>Enquiries that reach you the moment they come in.</p>
+            <span class="inc-hint">What’s included &rarr;</span>
+          </div>
+          <div class="inc-face inc-back">
+            <span class="inc-label">Included</span>
+            <ul>
+            <li>Name, phone &amp; email capture</li>
+            <li>Service requested &amp; project details</li>
+            <li>Delivered straight to your inbox</li>
+            <li>Instant notifications on your phone</li>
+            <li>CRM &amp; shared inbox routing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Google: front shows the icon, the back carries the detail. -->
+      <div class="inc-card reveal" tabindex="0" role="button" aria-expanded="false" aria-label="Google — show what is included">
+        <div class="inc-inner">
+          <div class="inc-face inc-front">
+            <span class="inc-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <h3>Google</h3>
+            <p>Turning up when someone nearby searches for what you do.</p>
+            <span class="inc-hint">What’s included &rarr;</span>
+          </div>
+          <div class="inc-face inc-back">
+            <span class="inc-label">Included</span>
+            <ul>
+            <li>Business information</li>
+            <li>Service descriptions &amp; categories</li>
+            <li>Photos</li>
+            <li>Website links</li>
+            <li>Reviews strategy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Support: front shows the icon, the back carries the detail. -->
+      <div class="inc-card reveal" tabindex="0" role="button" aria-expanded="false" aria-label="Support — show what is included">
+        <div class="inc-inner">
+          <div class="inc-face inc-front">
+            <span class="inc-icon"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <h3>Support</h3>
+            <p>Someone keeping the whole thing running after launch.</p>
+            <span class="inc-hint">What’s included &rarr;</span>
+          </div>
+          <div class="inc-face inc-back">
+            <span class="inc-label">Included</span>
+            <ul>
+            <li>Regular software &amp; security updates</li>
+            <li>Uptime monitoring</li>
+            <li>Content &amp; photo updates</li>
+            <li>Performance check-ins</li>
+            <li>Priority support when you need it</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ESTIMATOR: pick a package, watch the total update live ===== -->
 <section id="estimate" style="border-top:1px solid var(--border)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -658,6 +1004,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>See Your Estimated<br>Investment</h2>
       <p style="margin-top:16px;max-width:640px">Pick the pieces that fit your business and your estimate updates instantly. Final pricing is tailored to your goals on a quick strategy call.</p>
     </div>
+    <!-- Options on the left, the sticky totals panel on the right. -->
     <div class="est-grid">
       <div class="reveal">
         <!-- Meta Advertising estimator option — hidden while focusing on website marketing. Uncomment to restore.
@@ -671,6 +1018,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
           </div>
         </div>
         -->
+        <!-- Website choice. The data-setup and data-monthly values are what the totals math adds up. -->
         <div class="est-group">
           <span class="eyebrow" style="color:var(--gold)">Website</span>
           <div class="opt-row" data-group="web">
@@ -681,6 +1029,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
             <div class="opt" data-setup="3000" data-monthly="0" data-label="Complete Website Ownership"><span class="on">Own It Outright</span><span class="op">$3,000 once</span></div>
           </div>
         </div>
+        <!-- Add-ons. data-multi="1" on the row lets more than one of these be selected at once. -->
         <div class="est-group">
           <span class="eyebrow" style="color:var(--gold)">Add-Ons</span>
           <div class="opt-row" data-group="addon" data-multi="1">
@@ -691,9 +1040,11 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
           </div>
         </div>
       </div>
+      <!-- The live totals panel. It stays on screen while the options scroll past. -->
       <div class="est-panel reveal">
         <h3>Your Estimate</h3>
         <p class="pnote">One-time setup + monthly management</p>
+        <!-- JS rewrites this list from scratch every time a selection changes. -->
         <div id="estLines"><div class="est-line"><span>Nothing selected yet</span><span>—</span></div></div>
         <div class="est-total"><span class="lab">Setup</span><span class="val" id="estSetup">$0</span></div>
         <div class="est-total sub"><span class="lab">Monthly</span><span class="val" id="estMonthly">$0<small>/mo</small></span></div>
@@ -704,6 +1055,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </section>
 
+<!-- ===== PROCESS: six numbered steps from the first call through ongoing work ===== -->
 <section id="process" style="border-top:1px solid var(--border)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -711,17 +1063,25 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>From First Call<br>to Real Growth</h2>
       <p style="margin-top:16px;max-width:640px">A clear, straightforward process from day one. You always know what's happening, what it costs, and what's next.</p>
     </div>
+    <!-- Step cards, each with a number, a rough timeline, and what happens in it. -->
     <div class="proc">
+      <!-- Step 1, day one: the discovery call. -->
       <div class="step reveal"><span class="snum">01</span><span class="swhen">Day 1</span><h3>Discovery Call</h3><p>We learn your business, goals, margins, and what a new customer is actually worth to you.</p></div>
+      <!-- Step 2, first week: strategy and plan. -->
       <div class="step reveal"><span class="snum">02</span><span class="swhen">Week 1</span><h3>Strategy &amp; Plan</h3><p>We map the offer, audiences, funnel, and systems around your goals — built for you, not from a template.</p></div>
+      <!-- Step 3: building the site, CRM, and automations. -->
       <div class="step reveal"><span class="snum">03</span><span class="swhen">Week 1–2</span><h3>Build &amp; Setup</h3><p>Website, CRM, and automations built, connected, and tested end to end before anything goes live.</p></div>
+      <!-- Step 4: launch, with tracking already in place. -->
       <div class="step reveal"><span class="snum">04</span><span class="swhen">Week 2</span><h3>Launch</h3><p>Campaigns go live with tracking in place, so every lead and every dollar of spend is measured.</p></div>
+      <!-- Step 5, ongoing: monitoring and optimization. -->
       <div class="step reveal"><span class="snum">05</span><span class="swhen">Ongoing</span><h3>Optimize</h3><p>Daily monitoring, creative testing, and continuous improvement — your systems get sharper week over week.</p></div>
+      <!-- Step 6, monthly: reporting, then scaling what works. -->
       <div class="step reveal"><span class="snum">06</span><span class="swhen">Monthly</span><h3>Report &amp; Scale</h3><p>Clear reporting on spend, leads, and revenue — then we put more behind what's working.</p></div>
     </div>
   </div>
 </section>
 
+<!-- ===== PORTFOLIO: live previews of sites we have shipped ===== -->
 <section id="portfolio" style="border-top:1px solid var(--border)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -729,7 +1089,9 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>Websites We've Built</h2>
       <p style="margin-top:16px;max-width:640px">Live previews of real client websites. Hover any preview to visit the site.</p>
     </div>
+    <!-- Deliberately empty. JS fills this from the PORTFOLIO_SITES list near the bottom of the file. -->
     <div class="pf-grid" id="pfGrid"></div>
+    <!-- "More projects coming" banner under the grid, so a short portfolio still looks busy. -->
     <div class="pf-more reveal">
       <div class="pf-more-txt">
         <span class="pf-dots"><i></i><i></i><i></i></span>
@@ -741,12 +1103,14 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </section>
 
+<!-- ===== RESULTS: the proof numbers again, plus case study placeholders ===== -->
 <section id="results" style="border-top:1px solid var(--border)">
   <div class="wrap results-band">
     <div class="sec-head reveal">
       <span class="eyebrow">Results</span>
       <h2>Driven by Data.<br>Proven by Results.</h2>
     </div>
+    <!-- Same headline numbers as the top of the page, written out statically here rather than animated. -->
     <div class="stats">
       <!-- Ad-spend ROAS stat hidden while focusing on website marketing. Uncomment to restore.
       <div class="stat reveal"><span class="num">3.8x</span><h3>Average ROAS</h3><p>Across campaigns focused on profitable, long-term growth.</p></div>
@@ -754,11 +1118,13 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <div class="stat reveal"><span class="num">10,000+</span><h3>Leads Generated</h3><p>Systems built to attract, qualify, and convert the right customers.</p></div>
       <div class="stat reveal"><span class="num">$500K+</span><h3>Revenue Generated</h3><p>Combined client revenue through performance-driven marketing.</p></div>
     </div>
+    <!-- Three case study placeholders holding the space until real client results are ready. -->
     <div class="case-grid">
       <div class="case reveal"><div><span class="metric">Case Study</span><p>Campaign screenshots and client results — coming soon.</p></div><span class="eyebrow" style="color:var(--gold)">Service Business</span></div>
       <div class="case reveal"><div><span class="metric">Case Study</span><p>Lead generation systems in action — coming soon.</p></div><span class="eyebrow" style="color:var(--gold)">Home Services</span></div>
       <div class="case reveal"><div><span class="metric">Case Study</span><p>eCommerce sales campaigns — coming soon.</p></div><span class="eyebrow" style="color:var(--gold)">Online Brand</span></div>
     </div>
+    <!-- Closing prompt and button at the end of the results section. -->
     <div style="margin-top:64px" class="reveal">
       <h3 style="font-size:clamp(1.3rem,2.5vw,1.8rem);margin-bottom:20px">Want Results Like This for Your Business?</h3>
       <a class="btn btn-solid" href="#contact">Request a Call</a>
@@ -766,6 +1132,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </section>
 
+<!-- ===== TESTIMONIALS: review cards, placeholders until real client quotes arrive ===== -->
 <section id="testimonials" style="border-top:1px solid var(--border)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -773,28 +1140,35 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2>Real Results.<br>Real Businesses.</h2>
       <p style="margin-top:16px;max-width:640px">Client stories are on the way as we grow. Want to be one of the first businesses featured here?</p>
     </div>
+    <!-- Three review cards. Swap the quote, name, and location as clients give them. -->
     <div class="tst-grid">
+      <!-- Placeholder review 1. -->
       <div class="tst reveal">
         <div class="stars">★★★★★</div>
         <p class="quote">Your success story could go right here. Client testimonials coming soon.</p>
         <div class="who"><div class="av">★</div><div><b>Your Business</b><span>Greater Boston, MA</span></div></div>
       </div>
+      <!-- Placeholder review 2. -->
       <div class="tst reveal">
         <div class="stars">★★★★★</div>
         <p class="quote">Real feedback from real clients will appear here as our results roll in.</p>
         <div class="who"><div class="av">★</div><div><b>Your Business</b><span>Massachusetts</span></div></div>
       </div>
+      <!-- Placeholder review 3. -->
       <div class="tst reveal">
         <div class="stars">★★★★★</div>
         <p class="quote">This spot is reserved for a business we help generate more leads and sales.</p>
         <div class="who"><div class="av">★</div><div><b>Your Business</b><span>Greater Boston, MA</span></div></div>
       </div>
     </div>
+    <!-- Invitation to be one of the first businesses featured here. -->
     <div style="margin-top:48px" class="reveal"><a class="btn btn-solid" href="#contact">Become a Featured Client</a></div>
   </div>
 </section>
 
+<!-- ===== ABOUT: who we are, followed by the three value cards ===== -->
 <section id="about" style="border-top:1px solid var(--border)">
+  <!-- Heading on the left, the story copy on the right. -->
   <div class="wrap split">
     <div class="reveal">
       <span class="eyebrow">About Us</span>
@@ -806,6 +1180,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <p style="margin-top:20px">Aperio is Latin for "I open, I reveal" — because that's the job: opening your business to the customers already searching for it. Based in the Greater Boston area, working with service businesses, contractors, and online brands across Massachusetts and beyond.</p>
     </div>
   </div>
+  <!-- Three value cards: strategy, execution, transparency. -->
   <div class="wrap values">
     <div class="card reveal"><span class="idx">/ 01</span><h3>Strategy</h3><p>Every campaign starts with a plan built around your business goals, market, and margins — not a template.</p></div>
     <div class="card reveal"><span class="idx">/ 02</span><h3>Execution</h3><p>Daily monitoring, creative testing, and continuous optimization. Systems that run and improve every week.</p></div>
@@ -813,6 +1188,7 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </section>
 
+<!-- ===== CONTACT: last section on the page, the form and how to reach us ===== -->
 <section id="contact" style="border-top:1px solid var(--border)">
   <div class="wrap contact-grid">
     <div class="reveal">
@@ -820,74 +1196,100 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <div class="rule"></div>
       <h2 style="font-size:clamp(1.8rem,4vw,2.6rem)">Let's Grow<br>Your Business</h2>
       <p style="margin-top:20px">Tell us about your business and we'll reach out to discuss your growth strategy.</p>
+      <!-- Direct contact details under the invitation copy. -->
       <div class="contact-info">
         <a href="mailto:amadeospapa@gmail.com">amadeospapa@gmail.com</a>
         <!-- Add your business phone when ready: <a href="tel:+1XXXXXXXXXX">+1 (XXX) XXX-XXXX</a> -->
         <span class="gold">★ Greater Boston, Massachusetts</span>
       </div>
     </div>
+    <!-- Contact form. JS intercepts the submit and opens a pre-filled email instead of posting anywhere. -->
     <form class="reveal" id="contactForm">
-      <div><label for="f-name">Name</label><input id="f-name" name="name" required></div>
-      <div><label for="f-biz">Business Name</label><input id="f-biz" name="business"></div>
-      <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" required></div>
-      <div><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel"></div>
+      <!-- Required: who is reaching out. -->
+      <div><label for="f-name">Name</label><input id="f-name" name="name" placeholder="Sarah Mitchell" required></div>
+      <!-- Optional business name, handy context before the call. -->
+      <div><label for="f-biz">Business Name</label><input id="f-biz" name="business" placeholder="Mitchell &amp; Sons Roofing"></div>
+      <!-- Required: type="email" makes the browser check the format before submitting. -->
+      <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" placeholder="sarah@mitchellroofing.com" required></div>
+      <!-- Optional: type="tel" brings up the number pad on phones. -->
+      <div><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" placeholder="(617) 555-0142"></div>
+      <!-- Which service they are after. The Meta Ads option is parked in a comment for now. -->
       <div class="full"><label for="f-svc">What are you interested in?</label>
         <select id="f-svc" name="service">
+          <option value="" disabled selected>Select a service</option>
           <!--<option>Meta Ads</option>--><option>Website</option><option>CRM &amp; Automation</option><option>Not Sure Yet</option>
         </select>
       </div>
-      <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Tell us about your business and goals..."></textarea></div>
+      <!-- Free text box for their goals and any details. -->
+      <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="We're a roofing company near Boston and want more local leads. Most of our work comes from referrals right now."></textarea></div>
+      <!-- Honeypot. Invisible to people, irresistible to bots: if this turns up
+           filled in, the backend silently drops the submission. -->
+      <div class="hp" aria-hidden="true">
+        <label for="f-hp">Company Website</label>
+        <input id="f-hp" name="company_website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <!-- Submit button, stretched across both form columns. -->
       <div class="full"><button class="btn btn-solid" type="submit" style="width:100%;border:none">Request a Call</button></div>
+      <!-- Where the result is reported. aria-live means a screen reader announces it
+           without the visitor having to go hunting for what happened. -->
+      <p class="full form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>
 
+<!-- ===== FOOTER: the very bottom of the page ===== -->
 <footer>
   <div class="wrap foot">
+    <!-- Footer logo, same theme swapping pair of images as the nav. -->
     <a class="logo" href="#top">
       <img class="logo-dark" src="assets/aperio-icon-glow-transparent-1024.png" alt="Aperio Digital">
       <img class="logo-light" src="assets/aperio-icon-light-transparent-1024.png" alt="Aperio Digital">
       <span class="logo-word">Aperio <em>Digital</em></span>
     </a>
+    <!-- Copyright line. Worth bumping the year every January. -->
     <span>© 2026 Aperio Digital. All rights reserved.</span>
+    <!-- Social buttons. The hrefs are still "#" placeholders and need the real profile links. -->
     <div class="socials">
       <a href="#" aria-label="TikTok">TikTok</a><a href="#" aria-label="Instagram">Instagram</a><a href="#" aria-label="Facebook">Facebook</a><a href="#" aria-label="X">X</a>
     </div>
+    <!-- Legal links. Both still point at "#" and need real pages behind them. -->
     <div class="links"><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a></div>
   </div>
 </footer>
 
+<!-- ===== SCRIPTS: everything interactive on the page, roughly in the order the sections appear ===== -->
 <script>
-// nav scroll state
+// Nav: once the visitor scrolls past the first 50px, give the bar a frosted background so the links stay readable.
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50),{passive:true});
 
-// theme toggle (light / dark)
+// Theme toggle in the nav: flip between light and dark, and remember the choice for their next visit.
 const themeToggle=document.getElementById('themeToggle');
 themeToggle.addEventListener('click',()=>{
   const next=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
   document.documentElement.setAttribute('data-theme',next);
   try{localStorage.setItem('theme',next)}catch(e){}
 });
-// follow OS changes only while the user hasn't set an explicit preference
+// If they have never picked a theme by hand, quietly follow whatever their operating system switches to.
 matchMedia('(prefers-color-scheme: light)').addEventListener('change',e=>{
   if(!localStorage.getItem('theme'))document.documentElement.setAttribute('data-theme',e.matches?'light':'dark');
 });
 
-// mobile menu
+// Burger menu: open and close the full screen menu, and freeze page scroll while it is open.
 const burger=document.getElementById('burger'),menu=document.getElementById('mobileMenu');
 burger.addEventListener('click',()=>{burger.classList.toggle('open');menu.classList.toggle('open');document.body.style.overflow=menu.classList.contains('open')?'hidden':''});
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');menu.classList.remove('open');document.body.style.overflow=''}));
 
-// duplicate ticker content for seamless loop
+// Both marquees: triple the content so the animation restarts off screen and the loop never shows a gap.
 const tk=document.getElementById('ticker');tk.innerHTML+=tk.innerHTML+tk.innerHTML;
 const ind=document.getElementById('indTrack');if(ind)ind.innerHTML+=ind.innerHTML+ind.innerHTML;
 
-// ===== estimator =====
+// ===== Estimator: recalculate the totals panel every time an option tile is clicked =====
 (function(){
   const rows=document.querySelectorAll('.opt-row');
   if(!rows.length)return;
   const fmt=n=>'$'+n.toLocaleString();
+  // Add up every selected tile, then rewrite the line items and both totals in the panel.
   function recalc(){
     let setup=0,monthly=0;const lines=[];
     document.querySelectorAll('.opt.sel').forEach(o=>{
@@ -902,6 +1304,7 @@ const ind=document.getElementById('indTrack');if(ind)ind.innerHTML+=ind.innerHTM
     document.getElementById('estSetup').textContent=fmt(setup);
     document.getElementById('estMonthly').innerHTML=fmt(monthly)+'<small>/mo</small>';
   }
+  // Wire up the clicks: the add-on row allows several picks, every other row is pick one.
   rows.forEach(row=>{
     const multi=row.dataset.multi;
     row.querySelectorAll('.opt').forEach(opt=>{
@@ -915,11 +1318,11 @@ const ind=document.getElementById('indTrack');if(ind)ind.innerHTML+=ind.innerHTM
   recalc();
 })();
 
-// reveal on scroll
+// Fade each .reveal element in as it enters the viewport, then stop watching it.
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// count-up stats
+// Count the stat numbers up from zero the first time they scroll into view.
 function countUp(el){
   const target=parseFloat(el.dataset.count),pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
   const dec=String(el.dataset.count).includes('.')?1:0,dur=1400,t0=performance.now();
@@ -933,11 +1336,12 @@ function countUp(el){
 const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){countUp(e.target);io2.unobserve(e.target)}}),{threshold:.5});
 document.querySelectorAll('.num[data-count]').forEach(el=>io2.observe(el));
 
-// ===== PORTFOLIO — edit this list to add/remove showcased sites =====
+// ===== PORTFOLIO: this list is the only thing to edit when adding or removing a showcased site =====
 const PORTFOLIO_SITES=[
   {name:"Supreme Barbershop",tag:"Barbershop",url:"https://supremebarbershop.co"},
 ];
 const pfGrid=document.getElementById('pfGrid');
+// Build a card for each site above and drop it into the empty portfolio grid.
 PORTFOLIO_SITES.forEach(site=>{
   const card=document.createElement('div');
   card.className='pf-card reveal';
@@ -953,7 +1357,7 @@ PORTFOLIO_SITES.forEach(site=>{
   pfGrid.appendChild(card);
   io.observe(card);
 });
-// scale iframes to fit their card (previews render a 1280px desktop view)
+// Each preview loads the real site at 1280px desktop width, then gets scaled down to fit its card.
 function scaleFrames(){
   document.querySelectorAll('.pf-frame').forEach(fr=>{
     const s=fr.clientWidth/1280,ifr=fr.querySelector('iframe');
@@ -964,13 +1368,68 @@ function scaleFrames(){
 scaleFrames();
 addEventListener('resize',scaleFrames,{passive:true});
 
-// contact form -> mailto fallback
-document.getElementById('contactForm').addEventListener('submit',ev=>{
-  ev.preventDefault();
-  const f=ev.target,
-  body=`Name: ${f.name.value}%0ABusiness: ${f.business.value}%0AEmail: ${f.email.value}%0APhone: ${f.phone.value}%0AInterested in: ${f.service.value}%0A%0A${encodeURIComponent(f.message.value)}`;
-  location.href=`mailto:amadeospapa@gmail.com?subject=${encodeURIComponent('Growth Strategy Call Request — '+(f.business.value||f.name.value))}&body=${body}`;
+// What's Included: the cards flip on hover, but a phone has no hover, so a tap
+// toggles the same state. Enter and Space do it too for anyone tabbing through.
+document.querySelectorAll('.inc-card').forEach(card=>{
+  const flip=()=>{
+    const open=card.classList.toggle('flipped');
+    card.setAttribute('aria-expanded',open);
+  };
+  card.addEventListener('click',flip);
+  card.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}
+  });
 });
+
+// Contact form: posts to /api/contact, the Pages Function in functions/api/contact.js,
+// which emails the lead over and pushes it to Telegram. If that call cannot get
+// through, the old mailto behaviour takes over so a visitor never hits a dead end.
+(()=>{
+  const form=document.getElementById('contactForm');
+  const note=document.getElementById('formStatus');
+  const btn=form.querySelector('button[type="submit"]');
+  const opened=Date.now();
+  const v=n=>form.elements[n].value.trim();
+
+  // Last resort: hand the details to their own email app, the way the site used to.
+  function mailtoFallback(){
+    const body=`Name: ${v('name')}%0ABusiness: ${v('business')}%0AEmail: ${v('email')}%0APhone: ${v('phone')}%0AInterested in: ${v('service')}%0A%0A${encodeURIComponent(v('message'))}`;
+    location.href=`mailto:amadeospapa@gmail.com?subject=${encodeURIComponent('Growth Strategy Call Request — '+(v('business')||v('name')))}&body=${body}`;
+  }
+
+  form.addEventListener('submit',async ev=>{
+    ev.preventDefault();
+    const label=btn.textContent;
+    btn.disabled=true;btn.textContent='Sending…';
+    note.classList.remove('ok','err');note.textContent='';
+
+    try{
+      const res=await fetch('/api/contact',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          name:v('name'),business:v('business'),email:v('email'),
+          phone:v('phone'),service:v('service'),message:v('message'),
+          company_website:v('company_website'), // honeypot, empty for a real person
+          elapsed:Date.now()-opened             // real people take longer than 2s
+        })
+      });
+      const data=await res.json().catch(()=>({}));
+      if(!res.ok||!data.ok)throw new Error(data.error||'Send failed');
+
+      // Empty the fields so success is obvious even without reading the message.
+      form.reset();
+      note.classList.add('ok');
+      note.textContent='Thanks — your message is through. We\u2019ll be in touch shortly.';
+    }catch(err){
+      note.classList.add('err');
+      note.textContent='That did not send. Opening your email app instead…';
+      setTimeout(mailtoFallback,1200);
+    }finally{
+      btn.disabled=false;btn.textContent=label;
+    }
+  });
+})();
 </script>
 </body>
 </html>
