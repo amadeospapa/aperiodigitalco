@@ -1,12 +1,14 @@
 # Contact form backend
 
-The form at the bottom of `index.html` POSTs to `/api/contact`, handled by
-`functions/api/contact.js`. That function emails the lead to you and pushes it to
-Telegram. If it cannot be reached, the form falls back to opening the visitor's
-email app, which is what the site did before.
+The form at the bottom of `public/index.html` POSTs to `/api/contact`. The Worker
+entry `src/index.js` routes that one path to `src/contact.js`, which emails the lead
+to you and pushes it to Telegram; everything else falls through to the static site in
+`public/`. If the endpoint cannot be reached, the form falls back to opening the
+visitor's email app.
 
-Cloudflare Pages picks up the `functions/` directory automatically. There is no
-build step and nothing to install — just deploy as usual.
+The site is a **Worker** (`aperiodigitalco`), not Cloudflare Pages. Workers Builds is
+connected to the GitHub repo, so a push to `main` is a deploy. Config lives in
+`wrangler.jsonc`; there is no build step.
 
 ## 1. Email (Resend)
 
@@ -31,8 +33,19 @@ Free tier is 3,000 emails/month, far past what a contact form needs.
 
 ## 3. Add the secrets to Cloudflare
 
-Pages project → **Settings → Environment variables → Production**. Add each as an
-**encrypted** variable, then redeploy so the running function picks them up:
+Set these as Worker secrets from the project directory:
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put TELEGRAM_TOKEN
+npx wrangler secret put TELEGRAM_CHAT_ID
+```
+
+The name goes on the command line; the value goes in at the prompt. Putting the value
+in the name position stores your key in plaintext, since only values are encrypted.
+
+In the dashboard the same page is Worker → **Settings → Variables and Secrets**. Note
+this is the *Worker's* settings, not a Pages project:
 
 | Variable | Required | Notes |
 |---|---|---|
@@ -47,22 +60,22 @@ form returns an error and falls back to mailto.
 
 ## 4. Optional: rate limiting
 
-Create a KV namespace and bind it to the Pages project as `LEADS`. The function
+Create a KV namespace and bind it as `LEADS` in `wrangler.jsonc`. The handler
 then caps each IP at 5 messages per hour. Without the binding it skips the check.
 
 ## Testing
 
 ```bash
 # Local, with .dev.vars filled in
-npx wrangler pages dev .
+npx wrangler dev
 
 # Hit the endpoint directly
-curl -X POST http://localhost:8788/api/contact \
+curl -X POST http://localhost:8787/api/contact \
   -H 'Content-Type: application/json' \
   -d '{"name":"Test","email":"test@example.com","message":"Hello","elapsed":9999}'
 
 # Watch production logs
-npx wrangler pages deployment tail
+npx wrangler tail
 ```
 
 `elapsed` is how long the visitor had the page open. Anything under 2 seconds is
