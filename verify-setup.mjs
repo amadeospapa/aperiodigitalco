@@ -107,5 +107,5 @@ if (!env.RESEND_API_KEY || PLACEHOLDER.test(env.RESEND_API_KEY)) {
   } else { console.log(bad('API key rejected (HTTP ' + r.status + '): ' + (body.message || ''))); failures++; }
 }
 
-console.log(failures ? `\n${failures} thing(s) still to fix.\n` : '\nAll good. Paste the same values into Cloudflare Pages and redeploy.\n');
+console.log(failures ? `\n${failures} thing(s) still to fix.\n` : '\nAll good. Set them on the Worker with `npx wrangler secret put NAME`, then push to deploy.\n');
 process.exit(failures ? 1 : 0);

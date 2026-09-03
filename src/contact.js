@@ -1,9 +1,9 @@
 // ===== CONTACT FORM BACKEND =====
-// A Cloudflare Pages Function. Anything POSTed to /api/contact lands here, on the
-// same domain as the site, so the browser never has to deal with CORS.
+// Called by src/index.js for POST /api/contact. Same domain as the site, so the
+// browser never has to deal with CORS.
 //
-// Secrets live in the Pages dashboard (Settings > Environment variables), never in
-// this file. Nothing here is sent to the browser, so the API keys stay private:
+// Secrets are set with `wrangler secret put NAME`, never in this file. Nothing here
+// is sent to the browser, so the API keys stay private:
 //   RESEND_API_KEY    - from resend.com, sends the email
 //   TELEGRAM_TOKEN    - from @BotFather, sends the phone notification
 //   TELEGRAM_CHAT_ID  - your own chat id, so the bot knows who to message
@@ -20,8 +20,7 @@ const MAX = { name: 100, business: 120, email: 150, phone: 40, service: 60, mess
 // directly to this endpoint and skip the form entirely.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
+export async function handleContact(request, env) {
   const ip = request.headers.get('CF-Connecting-IP') || '';
 
   // Read the body. A bot posting junk instead of JSON stops right here.
@@ -70,11 +69,6 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'Could not send right now.' }, 502);
   }
   return json({ ok: true });
-}
-
-// Anything other than a POST (someone opening /api/contact in a browser tab).
-export async function onRequest() {
-  return json({ ok: false, error: 'Use POST.' }, 405);
 }
 
 // ===== Helpers =====
@@ -143,7 +137,7 @@ async function sendTelegram(env, d) {
   if (!env.TELEGRAM_TOKEN || !env.TELEGRAM_CHAT_ID) return false;
 
   const text = [
-    'New lead — aperiodigital.co',
+    'New lead — aperiodigitalco.com',
     '',
     'Name: ' + d.name,
     d.business ? 'Business: ' + d.business : '',

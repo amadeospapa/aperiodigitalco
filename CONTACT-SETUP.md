@@ -14,9 +14,9 @@ build step and nothing to install — just deploy as usual.
 2. **API Keys → Create**, copy the `re_...` key.
 3. That is enough to start: the default sender `onboarding@resend.dev` works
    immediately, but only delivers to the address that owns the Resend account.
-4. To send from your own domain, add `aperiodigital.co` under **Domains**, add the
+4. To send from your own domain, add `aperiodigitalco.com` under **Domains**, add the
    DNS records it gives you, then set `LEAD_FROM` to something like
-   `Aperio Digital <leads@aperiodigital.co>`.
+   `Aperio Digital <leads@aperiodigitalco.com>`.
 
 Free tier is 3,000 emails/month, far past what a contact form needs.
 
