@@ -373,10 +373,18 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 .est-panel .btn{width:100%;text-align:center;margin-top:24px;border:none}
 .est-fine{font-size:.72rem;color:#6b7484;margin-top:16px;line-height:1.5}
 
-/* ===== PROCESS: the six numbered "how it works" step cards ===== */
-.proc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+/* ===== PROCESS: the six "how it works" steps, drawn as one snaking roadmap ===== */
+/* Row one runs left to right, row two doubles back right to left, so the six cards read as a
+   single road with a "You Are Here" marker at the start and the payoff at the end.
+   --pgap is the gutter the horizontal road segments live in, --prow the vertical ones. */
+.proc-map{--pgap:40px;--prow:64px;--road:var(--gold);margin-top:56px}
+.proc{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--prow) var(--pgap)}
+/* Steps 04-06 are placed by hand so the numbering snakes across the top row and back along the bottom. */
+.step:nth-child(4){grid-column:3;grid-row:2}
+.step:nth-child(5){grid-column:2;grid-row:2}
+.step:nth-child(6){grid-column:1;grid-row:2}
 /* One process step card. */
-.step{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px;transition:border-color .25s}
+.step{position:relative;border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:32px;transition:border-color .25s}
 .step:hover{border-color:var(--blue)}
 /* The big gold step number. */
 .step .snum{font-family:var(--display);font-weight:700;font-size:2.4rem;color:var(--gold);line-height:1;display:block;margin-bottom:8px}
@@ -384,6 +392,64 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 .step .swhen{font-family:var(--display);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:14px}
 .step h3{font-size:1.05rem;margin-bottom:10px;letter-spacing:.03em}
 .step p{font-size:1rem}
+
+/* --- The road itself. On every card ::before is the dashed segment leaving it and ::after is the
+   arrowhead sitting at the far end of that segment, just short of the next card. --- */
+.step::before,.road-start::before{content:'';position:absolute;opacity:.5;
+  background-image:repeating-linear-gradient(90deg,var(--road) 0 7px,transparent 7px 12px);
+  background-size:12px 2px;animation:roadflow 1.8s linear infinite}
+.step::after,.road-start::after{content:'';position:absolute;width:9px;height:9px;opacity:.85;
+  border-top:2px solid var(--road);border-right:2px solid var(--road)}
+/* Hovering a card lights up the stretch of road leaving it. */
+.step:hover::before{opacity:.95}
+/* Steps 01 and 02 hand off to the right, across the top row. */
+.step:nth-child(1)::before,.step:nth-child(2)::before{top:50%;left:100%;margin-top:-1px;width:var(--pgap);height:2px}
+.step:nth-child(1)::after,.step:nth-child(2)::after{top:50%;left:calc(100% + var(--pgap) - 11px);transform:translateY(-50%) rotate(45deg)}
+/* Steps 04 and 05 hand off back to the left, along the bottom row. */
+.step:nth-child(4)::before,.step:nth-child(5)::before{top:50%;right:100%;margin-top:-1px;width:var(--pgap);height:2px;animation-direction:reverse}
+.step:nth-child(4)::after,.step:nth-child(5)::after{top:50%;right:calc(100% + var(--pgap) - 11px);transform:translateY(-50%) rotate(-135deg)}
+/* The three drops: into step 01, from 03 down into 04 at the turn, and from 06 into the result. */
+.step:nth-child(3)::before,.step:nth-child(6)::before,.road-start::before{top:100%;left:50%;margin-left:-1px;width:2px;height:var(--prow);
+  background-image:repeating-linear-gradient(180deg,var(--road) 0 7px,transparent 7px 12px);background-size:2px 12px;animation-name:roadflowv}
+.step:nth-child(3)::after,.step:nth-child(6)::after,.road-start::after{top:calc(100% + var(--prow) - 11px);left:50%;transform:translateX(-50%) rotate(135deg)}
+/* Dashes drift along the road, the way a route animates on a map. */
+@keyframes roadflow{to{background-position:12px 0}}
+@keyframes roadflowv{to{background-position:0 12px}}
+
+/* --- Start and end markers. Each is exactly one grid column wide so it sits over the left
+   column, where the road begins and where step 06 finally comes back to. --- */
+.road-mark{position:relative;display:flex;align-items:center;gap:16px;width:calc((100% - var(--pgap)*2)/3);
+  border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:16px 20px}
+.road-mark .rm-ico{position:relative;flex-shrink:0;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center}
+.road-mark .rm-ico svg{width:20px;height:20px}
+.road-mark .rm-txt b{display:block;font-family:var(--display);font-weight:600;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--head)}
+.road-mark .rm-txt span{display:block;margin-top:3px;font-size:.82rem;line-height:1.45;color:var(--body)}
+/* "You are here" reads as provisional: dashed border, blue pin, and a ping that keeps repeating. */
+.road-start{border-style:dashed;margin-bottom:var(--prow)}
+.road-start .rm-ico{color:var(--blue);border-color:var(--blue);background:rgba(46,107,255,.1)}
+.road-start .rm-ico::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--blue);animation:herepulse 2.4s ease-out infinite}
+@keyframes herepulse{0%{transform:scale(1);opacity:.6}70%,100%{transform:scale(1.65);opacity:0}}
+/* The payoff at the end of the road, in the same gold as the step numbers. */
+.road-end{margin-top:var(--prow);border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,175,55,.07)}
+.road-end .rm-ico{color:var(--gold);border-color:var(--gold);background:rgba(212,175,55,.1)}
+.road-end .rm-txt b{color:var(--gold)}
+
+/* Narrower desktops: pull the gutters in so three cards still breathe. */
+@media(max-width:1040px){.proc-map{--pgap:28px;--prow:52px}}
+/* Phones and small tablets: the grid drops to one column, so the road straightens into one line down. */
+@media(max-width:900px){
+  .proc-map{--prow:40px}
+  .proc-map .road-mark{width:100%}
+  .proc-map .proc .step{grid-column:auto;grid-row:auto}
+  .proc-map .proc .step::before{top:100%;left:50%;right:auto;margin:0 0 0 -1px;width:2px;height:var(--prow);
+    background-image:repeating-linear-gradient(180deg,var(--road) 0 7px,transparent 7px 12px);background-size:2px 12px;
+    animation-name:roadflowv;animation-direction:normal}
+  .proc-map .proc .step::after{top:calc(100% + var(--prow) - 11px);left:50%;right:auto;transform:translateX(-50%) rotate(135deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  .step::before,.road-start::before,.road-start .rm-ico::after{animation:none}
+}
 
 /* ===== TESTIMONIALS: review cards, placeholders until real client quotes come in ===== */
 .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
@@ -554,11 +620,12 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <!-- The main headline, the largest text anywhere on the site. -->
     <h1>A Marketing<br>Agency for<br><em>Businesses</em></h1>
     <!-- One sentence saying what we do, directly under the headline. -->
-    <p class="sub">Performance marketing built to generate leads, increase sales, and drive real business growth through proven strategy and data-backed execution.</p>
+    <p class="sub">Performance marketing built to generate leads, increase sales,
+      and drive real business growth through proven strategy and data-backed execution.</p>
     <!-- The two hero buttons: book a call, or jump down to the results section. -->
     <div class="hero-btns">
       <a class="btn btn-solid" href="#contact">Request a Call</a>
-      <a class="btn btn-ghost" href="#results">View Results</a>
+      <!--<a class="btn btn-ghost" href="#results">View Results</a> -->
     </div>
   </div>
 </header>
@@ -567,7 +634,12 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
 <div class="ticker">
   <!-- JS copies this content twice more so the marquee loops without a gap. -->
   <div class="ticker-track" id="ticker">
-    <span>Leads <i class="star">★</i> Sales <i class="star">★</i> Growth <i class="star">★</i> Results <i class="star">★</i> Strategy <i class="star">★</i> Performance <i class="star">★</i>&nbsp;</span>
+    <span>Leads <i class="star">★</i>
+      Sales <i class="star">★</i>
+      Growth <i class="star">★</i>
+      Results <i class="star">★</i>
+      Strategy <i class="star">★</i>
+      Performance <i class="star">★</i>&nbsp;</span>
   </div>
 </div>
 
@@ -581,12 +653,24 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <!-- The stat cards. Each number counts up from zero the first time it scrolls into view. -->
     <div class="stats">
       <!-- Ad-spend ROAS stat hidden while focusing on website marketing. Uncomment to restore.
-      <div class="stat reveal"><span class="num" data-count="3.8" data-suffix="x">0x</span><h3>Average ROAS</h3><p>Consistent return on ad spend across campaigns focused on profitable growth and long-term performance.</p></div>
+      <div class="stat reveal">
+        <span class="num" data-count="3.8" data-suffix="x">0x</span>
+        <h3>Average ROAS</h3>
+        <p>Consistent return on ad spend across campaigns focused on profitable growth and long-term performance.</p>
+      </div>
       -->
       <!-- Leads stat. data-count is the target the count up animation climbs to. -->
-      <div class="stat reveal"><span class="num" data-count="10000" data-suffix="+">0+</span><h3>Leads Generated</h3><p>High-quality lead generation systems built to attract, qualify, and convert the right customers.</p></div>
+      <div class="stat reveal">
+        <span class="num" data-count="10000" data-suffix="+">0+</span>
+        <h3>Leads Generated</h3>
+        <p>High-quality lead generation systems built to attract, qualify, and convert the right customers.</p>
+      </div>
       <!-- Revenue stat. data-prefix and data-suffix wrap the number so it reads as $500K+. -->
-      <div class="stat reveal"><span class="num" data-count="500" data-prefix="$" data-suffix="K+">$0K+</span><h3>Revenue Generated</h3><p>Total combined revenue generated across client campaigns through performance-driven marketing and optimized ad strategy.</p></div>
+      <div class="stat reveal">
+        <span class="num" data-count="500" data-prefix="$" data-suffix="K+">$0K+</span>
+        <h3>Revenue Generated</h3>
+        <p>Total combined revenue generated across client campaigns through performance-driven marketing and optimized ad strategy.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -599,12 +683,19 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <span class="eyebrow">How We Drive Growth</span>
       <div class="rule"></div>
       <!-- Lead paragraph, set larger than normal body text. -->
-      <p class="big">At Aperio Digital, we combine clear strategy, data-driven decisions, and strong execution to help businesses generate qualified leads, increase sales, and build marketing systems that perform.</p>
-      <p style="margin-top:20px">From custom websites to CRM, email, and SMS automation, our focus is creating real growth that can be tracked, improved, and scaled.</p>
+      <p class="big">At Aperio Digital, we combine clear strategy, data-driven decisions,
+        and strong execution to help businesses generate qualified leads, increase sales, and build marketing systems that perform.</p>
+      <p style="margin-top:20px">From custom websites to CRM, email, and SMS automation,
+        our focus is creating real growth that can be tracked, improved, and scaled.</p>
     </div>
     <!-- Six numbered chips listing what we actually build. -->
     <div class="tags reveal">
-      <span><b>01</b> Custom Websites</span><span><b>02</b> CRM Systems</span><span><b>03</b> Email Automation</span><span><b>04</b> SMS Follow-Up</span><span><b>05</b> Lead Tracking</span><span><b>06</b> Reporting</span>
+      <span><b>01</b> Custom Websites</span>
+      <span><b>02</b> CRM Systems</span>
+      <span><b>03</b> Email Automation</span>
+      <span><b>04</b> SMS Follow-Up</span>
+      <span><b>05</b> Lead Tracking</span>
+      <span><b>06</b> Reporting</span>
     </div>
   </div>
 </section>
@@ -619,22 +710,59 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <!-- Two by two card grid of our audiences. -->
     <div class="who">
       <!-- Card 1: local service trades, our bread and butter. -->
-      <div class="card reveal"><span class="idx">/ 01</span><h3>Local Service Businesses</h3><p>Pressure washing, cleaning, detailing, landscaping, gutters, tinting, fencing, and other service-based businesses looking for more leads and booked jobs.</p></div>
+      <div class="card reveal">
+        <span class="idx">/ 01</span>
+        <h3>Local Service Businesses</h3>
+        <p>Barbershops, pressure washing, cleaning, detailing, landscaping, gutters, tinting, fencing,
+          and other service-based businesses looking for more leads and booked jobs.</p>
+      </div>
       <!-- Card 2: online stores and product brands. -->
-      <div class="card reveal"><span class="idx">/ 02</span><h3>Online &amp; Product Brands</h3><p>Online stores, eCommerce brands, product-based businesses, and companies looking to increase sales through better websites and marketing systems.</p></div>
+      <div class="card reveal">
+        <span class="idx">/ 02</span>
+        <h3>Online &amp; Product Brands</h3>
+        <p>Online stores, eCommerce brands, product-based businesses,
+          and companies looking to increase sales through better websites and marketing systems.</p>
+      </div>
       <!-- Card 3: contractors, where a single new customer is worth a lot. -->
-      <div class="card reveal"><span class="idx">/ 03</span><h3>Contractors &amp; Home Services</h3><p>Roofing, HVAC, remodeling, construction, real estate services, and businesses where each new customer can create strong revenue growth.</p></div>
+      <div class="card reveal">
+        <span class="idx">/ 03</span>
+        <h3>Contractors &amp; Home Services</h3>
+        <p>Roofing, HVAC, remodeling, construction, real estate services,
+          and businesses where each new customer can create strong revenue growth.</p>
+      </div>
       <!-- Card 4: the catch all, so nobody rules themselves out. -->
-      <div class="card reveal"><span class="idx">/ 04</span><h3>Any Business With Growth Goals</h3><p>Restaurants, gyms, personal brands, local companies, and other businesses that need stronger websites or more consistent customer flow.</p></div>
+      <div class="card reveal">
+        <span class="idx">/ 04</span>
+        <h3>Any Business With Growth Goals</h3>
+        <p>Restaurants, gyms, personal brands, local companies,
+          and other businesses that need stronger websites or more consistent customer flow.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===== INDUSTRIES MARQUEE: pill strip between the audience cards and the pain points ===== -->
 <div class="ind">
-  <!-- Tripled by JS as well, same seamless loop trick as the ticker above. -->
+  <!-- Tripled by JS as well, same seamless loop as the ticker above. -->
+  <!-- Inline-block pills, so the line breaks sit inside the closing tag (</span\n><span>)
+       to keep the gap between pills coming from margin alone, with no extra whitespace. -->
   <div class="ind-track" id="indTrack">
-    <span>Pressure Washing <i>★</i></span><span>Roofing <i>★</i></span><span>HVAC <i>★</i></span><span>Landscaping <i>★</i></span><span>Cleaning Services <i>★</i></span><span>Auto Detailing <i>★</i></span><span>Remodeling <i>★</i></span><span>Fencing <i>★</i></span><span>Window Tinting <i>★</i></span><span>Gutters <i>★</i></span><span>Real Estate <i>★</i></span><span>Restaurants <i>★</i></span><span>Gyms &amp; Studios <i>★</i></span><span>eCommerce Brands <i>★</i></span><span>Contractors <i>★</i></span>
+    <span>Barbershops <i>★</i></span
+    ><span>Pressure Washing <i>★</i></span
+    ><span>Roofing <i>★</i></span
+    ><span>HVAC <i>★</i></span
+    ><span>Landscaping <i>★</i></span
+    ><span>Cleaning Services <i>★</i></span
+    ><span>Auto Detailing <i>★</i></span
+    ><span>Remodeling <i>★</i></span
+    ><span>Fencing <i>★</i></span
+    ><span>Window Tinting <i>★</i></span
+    ><span>Gutters <i>★</i></span
+    ><span>Real Estate <i>★</i></span
+    ><span>Restaurants <i>★</i></span
+    ><span>Gyms &amp; Studios <i>★</i></span
+    ><span>eCommerce Brands <i>★</i></span
+    ><span>Contractors <i>★</i></span>
   </div>
 </div>
 
@@ -644,15 +772,17 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="sec-head reveal">
       <span class="eyebrow">Sound Familiar?</span>
       <h2>Where Most Businesses<br>Lose Customers</h2>
-      <p style="margin-top:16px;max-width:640px">If any of these sound like your business, you're leaving leads and revenue on the table — and every one of them is fixable.</p>
+      <p style="margin-top:16px;max-width:640px">If any of these sound like your business,
+        you're leaving leads and revenue on the table. The good news? Every one of them is fixable.</p>
     </div>
     <!-- The problem cards. Each one is an icon, a heading, and a single plain sentence. -->
     <div class="pain-grid">
       <!-- Pain 1: a slow or dated site that loses people before they ever call. -->
       <div class="pain reveal">
         <div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg></div>
-        <h3>Outdated or Slow Website</h3>
-        <p>Looks dated, loads slowly, and turns visitors away before they ever reach out — especially on their phones.</p>
+        <h3>Outdated or Slow Website--or no site at all!</h3>
+        <p>No website at all immediately decreases exposure: you lose every customer that can't even find you.
+          Old sites look dated, load slowly, and turn visitors away before they ever reach out, especially on their phones.</p>
       </div>
 <!-- Ads pain point hidden while focusing on website marketing. Uncomment to restore.
       <div class="pain reveal">
@@ -697,7 +827,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="sec-head reveal price-intro">
       <span class="eyebrow">Services &amp; Pricing</span>
       <h2>Growth Systems Built<br>for Your Business</h2>
-      <p style="margin-top:18px">From custom websites to email and SMS automation, we build practical systems designed to help businesses generate more leads, increase sales, and grow consistently.</p>
+      <p style="margin-top:18px">From custom websites to email and SMS automation,
+        we build practical systems designed to help businesses generate more leads, increase sales, and grow consistently.</p>
     </div>
 
     <!-- ===== META ADVERTISING PACKAGES — hidden while focusing on website marketing. Uncomment this whole block to restore. =====
@@ -708,7 +839,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <div class="plan reveal">
         <h3>Meta Ads Management</h3>
         <div class="price">$500<small>per month</small></div>
-        <p class="desc">Built for service-based businesses that already have photos/videos and need professional Meta ad setup, management, testing, and optimization to generate more leads.</p>
+        <p class="desc">Built for service-based businesses that already have photos/videos and need professional Meta ad setup,
+          management, testing, and optimization to generate more leads.</p>
         <ul>
           <li>Full Meta Campaign Setup &amp; Management</li>
           <li>Lead Generation Focused Strategy</li>
@@ -727,7 +859,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <span class="badge">Most Popular</span>
         <h3>Meta Lead Growth System</h3>
         <div class="price">$1,250<small>per month</small></div>
-        <p class="desc">More than basic ad management — Meta ads, static photo creatives, CRM lead organization, and automated SMS/email follow-up for new ad leads.</p>
+        <p class="desc">More than basic ad management — Meta ads, static photo creatives, CRM lead organization,
+          and automated SMS/email follow-up for new ad leads.</p>
         <ul>
           <li>Full Meta Campaign Setup &amp; Management</li>
           <li>Audience &amp; Location Targeting Setup</li>
@@ -748,7 +881,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <div class="plan reveal">
         <h3>Meta Lead Elite System</h3>
         <div class="price">$2,500<small>per month</small></div>
-        <p class="desc">A complete done-for-you Meta ads system — campaign management, photo/video creatives, full CRM setup, advanced automations, and priority optimization.</p>
+        <p class="desc">A complete done-for-you Meta ads system — campaign management, photo/video creatives, full CRM setup,
+          advanced automations, and priority optimization.</p>
         <ul>
           <li>Everything in the Meta Lead Growth System</li>
           <li>Video Ad Creative Editing Included</li>
@@ -766,7 +900,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <div class="plan reveal">
         <h3>Meta Sales Campaigns</h3>
         <div class="price">$250<small>per month + 10% of sales</small></div>
-        <p class="desc">For businesses selling products online — Meta ads, email/SMS automations, order follow-ups, and sales-focused marketing built to drive purchases and repeat customers.</p>
+        <p class="desc">For businesses selling products online — Meta ads, email/SMS automations, order follow-ups,
+          and sales-focused marketing built to drive purchases and repeat customers.</p>
         <ul>
           <li>Full Meta Sales Campaign Setup &amp; Management</li>
           <li>Sales-Focused Ad Strategy</li>
@@ -791,7 +926,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="subhead reveal">
       <span class="eyebrow" style="color:var(--gold)">Website Development Packages</span>
       <h3>Custom Websites Designed<br>Around Your Business Goals</h3>
-      <p>Every package includes a mobile-optimized design, SEO-focused structure, contact forms, and ongoing support to keep your site running smoothly.</p>
+      <p>Every package includes a mobile-optimized design, SEO-focused structure, contact forms,
+        and ongoing support to keep your site running smoothly.</p>
     </div>
     <!-- The three website packages. Side by side on desktop, swipeable on mobile. -->
     <div class="plans">
@@ -852,13 +988,15 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="own-banner reveal">
       <div class="own-info">
         <h3>Complete Website Ownership</h3>
-        <p>Pay once to own your website, custom domain, and website assets outright — everything transferred to you after launch, with no monthly management fee.</p>
+        <p>Pay once to own your website, custom domain, and website assets outright.
+          Everything transferred to you after launch, with no monthly management fee.</p>
       </div>
       <div class="own-side">
         <div class="own-price">$3,000<small>one-time payment</small></div>
         <a class="btn btn-solid" href="#contact">Request a Call</a>
       </div>
     </div>
+
 
     <!-- CRM, email, and SMS automation panel that closes out the Services section. -->
     <div class="crm reveal">
@@ -871,7 +1009,11 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <div><h3>Text &amp; Email Workflows</h3></div>
         <div><h3>Setup + Monthly Management</h3></div>
       </div>
-      <p class="note">We build automated text and email follow-up systems that respond to new leads instantly and keep following up without manual work. New inquiries are organized into a simple CRM pipeline — who needs contact, who received an estimate, who booked, who needs follow-up. Custom workflows include lead confirmations, missed call text-backs, estimate follow-ups, review requests, appointment reminders, and customer reactivation.</p>
+      <p class="note">We build automated text and email follow-up systems that respond to new leads instantly and keep following up without manual work.
+        New inquiries are organized into a simple CRM pipeline: who needs contact, who received an estimate, who booked,
+        who needs follow-up.
+        Custom workflows include lead confirmations, missed call text-backs, estimate follow-ups, review requests,
+        appointment reminders, and customer reactivation.</p>
       <div style="margin-top:28px"><a class="btn btn-solid" href="#contact">Request a Call</a></div>
     </div>
   </div>
@@ -883,7 +1025,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="sec-head reveal">
       <span class="eyebrow">What's Included</span>
       <h2>Everything Your<br>Business Needs</h2>
-      <p style="margin-top:16px;max-width:640px">Every package is built from the same five pieces. Hover a card — or tap it on your phone — to see exactly what that piece covers.</p>
+      <p style="margin-top:16px;max-width:640px">Every package is built from the same five pieces.
+        Hover a card, or tap it on your phone, to see exactly what that piece covers.</p>
     </div>
     <div class="inc-grid">
       <!-- Website: front shows the icon, the back carries the detail. -->
@@ -1002,7 +1145,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="sec-head reveal">
       <span class="eyebrow">Build Your Package</span>
       <h2>See Your Estimated<br>Investment</h2>
-      <p style="margin-top:16px;max-width:640px">Pick the pieces that fit your business and your estimate updates instantly. Final pricing is tailored to your goals on a quick strategy call.</p>
+      <p style="margin-top:16px;max-width:640px">Pick the pieces that fit your business and your estimate updates instantly.
+        Final pricing is tailored to your goals on a quick strategy call.</p>
     </div>
     <!-- Options on the left, the sticky totals panel on the right. -->
     <div class="est-grid">
@@ -1049,7 +1193,8 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         <div class="est-total"><span class="lab">Setup</span><span class="val" id="estSetup">$0</span></div>
         <div class="est-total sub"><span class="lab">Monthly</span><span class="val" id="estMonthly">$0<small>/mo</small></span></div>
         <a class="btn btn-solid" href="#contact">Get My Custom Quote</a>
-        <p class="est-fine">Estimates only — final pricing depends on your goals. <!-- Ad budget is paid directly to Meta. --> SMS &amp; email usage may be billed separately if usage becomes excessive.</p>
+        <p class="est-fine">Estimates only — final pricing depends on your goals.
+          <!-- Ad budget is paid directly to Meta. --> SMS &amp; email usage may be billed separately if usage becomes excessive.</p>
       </div>
     </div>
   </div>
@@ -1061,22 +1206,66 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <div class="sec-head reveal">
       <span class="eyebrow">How It Works</span>
       <h2>From First Call<br>to Real Growth</h2>
-      <p style="margin-top:16px;max-width:640px">A clear, straightforward process from day one. You always know what's happening, what it costs, and what's next.</p>
+      <p style="margin-top:16px;max-width:640px">A clear, straightforward process from day one.
+        You always know what's happening, what it costs, and what's next.</p>
     </div>
-    <!-- Step cards, each with a number, a rough timeline, and what happens in it. -->
-    <div class="proc">
-      <!-- Step 1, day one: the discovery call. -->
-      <div class="step reveal"><span class="snum">01</span><span class="swhen">Day 1</span><h3>Discovery Call</h3><p>We learn your business, goals, margins, and what a new customer is actually worth to you.</p></div>
-      <!-- Step 2, first week: strategy and plan. -->
-      <div class="step reveal"><span class="snum">02</span><span class="swhen">Week 1</span><h3>Strategy &amp; Plan</h3><p>We map the offer, audiences, funnel, and systems around your goals — built for you, not from a template.</p></div>
-      <!-- Step 3: building the site, CRM, and automations. -->
-      <div class="step reveal"><span class="snum">03</span><span class="swhen">Week 1–2</span><h3>Build &amp; Setup</h3><p>Website, CRM, and automations built, connected, and tested end to end before anything goes live.</p></div>
-      <!-- Step 4: launch, with tracking already in place. -->
-      <div class="step reveal"><span class="snum">04</span><span class="swhen">Week 2</span><h3>Launch</h3><p>Campaigns go live with tracking in place, so every lead and every dollar of spend is measured.</p></div>
-      <!-- Step 5, ongoing: monitoring and optimization. -->
-      <div class="step reveal"><span class="snum">05</span><span class="swhen">Ongoing</span><h3>Optimize</h3><p>Daily monitoring, creative testing, and continuous improvement — your systems get sharper week over week.</p></div>
-      <!-- Step 6, monthly: reporting, then scaling what works. -->
-      <div class="step reveal"><span class="snum">06</span><span class="swhen">Monthly</span><h3>Report &amp; Scale</h3><p>Clear reporting on spend, leads, and revenue — then we put more behind what's working.</p></div>
+    <!-- The roadmap: a "you are here" marker, the six step cards wired together, and the payoff. -->
+    <div class="proc-map">
+      <!-- Where every client stands before any of this exists. -->
+      <div class="road-mark road-start reveal">
+        <span class="rm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"></path><circle cx="12" cy="11" r="2.5"></circle></svg></span>
+        <span class="rm-txt"><b>You Are Here</b><span>Ready to grow, no system behind it yet.</span></span>
+      </div>
+      <!-- Step cards, each with a number, a rough timeline, and what happens in it. -->
+      <div class="proc">
+        <!-- Step 1, day one: the discovery call. -->
+        <div class="step reveal">
+          <span class="snum">01</span>
+          <span class="swhen">Day 1</span>
+          <h3>Discovery Call</h3>
+          <p>We learn your business, goals, margins, and what a new customer is actually worth to you.</p>
+        </div>
+        <!-- Step 2, first week: strategy and plan. -->
+        <div class="step reveal">
+          <span class="snum">02</span>
+          <span class="swhen">Week 1</span>
+          <h3>Strategy &amp; Plan</h3>
+          <p>We map the offer, audiences, funnel, and systems around your goals: your product is custombuilt for you, not from a template.</p>
+        </div>
+        <!-- Step 3: building the site, CRM, and automations. -->
+        <div class="step reveal">
+          <span class="snum">03</span>
+          <span class="swhen">Week 1–2</span>
+          <h3>Build &amp; Setup</h3>
+          <p>Website, CRM, and automations built, connected, and tested end to end before anything goes live.</p>
+        </div>
+        <!-- Step 4: launch, with tracking already in place. -->
+        <div class="step reveal">
+          <span class="snum">04</span>
+          <span class="swhen">Week 2</span>
+          <h3>Launch</h3>
+          <p>Campaigns go live with tracking in place, so every lead and every dollar of spend is measured.</p>
+        </div>
+        <!-- Step 5, ongoing: monitoring and optimization. -->
+        <div class="step reveal">
+          <span class="snum">05</span>
+          <span class="swhen">Ongoing</span>
+          <h3>Optimize</h3>
+          <p>Daily monitoring, creative testing, and continuous improvement mean your systems get sharper week over week.</p>
+        </div>
+        <!-- Step 6, monthly: reporting, then scaling what works. -->
+        <div class="step reveal">
+          <span class="snum">06</span>
+          <span class="swhen">Monthly</span>
+          <h3>Report &amp; Scale</h3>
+          <p>Clear reporting on spend, leads, and revenue, then we put more behind what's working.</p>
+        </div>
+      </div>
+      <!-- What the whole road adds up to, sitting under step 06 where the route ends. -->
+      <div class="road-mark road-end reveal">
+        <span class="rm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3z"></path><path d="M8 5H5.5v1.2A3.3 3.3 0 0 0 8.8 9.5"></path><path d="M16 5h2.5v1.2a3.3 3.3 0 0 1-3.3 3.3"></path><path d="M12 13v3.5"></path><path d="M8.6 21h6.8l-.9-4.5H9.5L8.6 21z"></path></svg></span>
+        <span class="rm-txt"><b>The Result</b><span>A growth engine that brings in customers every month.</span></span>
+      </div>
     </div>
   </div>
 </section>
@@ -1113,17 +1302,39 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     <!-- Same headline numbers as the top of the page, written out statically here rather than animated. -->
     <div class="stats">
       <!-- Ad-spend ROAS stat hidden while focusing on website marketing. Uncomment to restore.
-      <div class="stat reveal"><span class="num">3.8x</span><h3>Average ROAS</h3><p>Across campaigns focused on profitable, long-term growth.</p></div>
+      <div class="stat reveal">
+        <span class="num">3.8x</span>
+        <h3>Average ROAS</h3>
+        <p>Across campaigns focused on profitable, long-term growth.</p>
+      </div>
       -->
-      <div class="stat reveal"><span class="num">10,000+</span><h3>Leads Generated</h3><p>Systems built to attract, qualify, and convert the right customers.</p></div>
-      <div class="stat reveal"><span class="num">$500K+</span><h3>Revenue Generated</h3><p>Combined client revenue through performance-driven marketing.</p></div>
+      <div class="stat reveal">
+        <span class="num">10,000+</span>
+        <h3>Leads Generated</h3>
+        <p>Systems built to attract, qualify, and convert the right customers.</p>
+      </div>
+      <div class="stat reveal">
+        <span class="num">$500K+</span>
+        <h3>Revenue Generated</h3>
+        <p>Combined client revenue through performance-driven marketing.</p>
+      </div>
     </div>
     <!-- Three case study placeholders holding the space until real client results are ready. -->
+     <!-- commented out for now 
     <div class="case-grid">
-      <div class="case reveal"><div><span class="metric">Case Study</span><p>Campaign screenshots and client results — coming soon.</p></div><span class="eyebrow" style="color:var(--gold)">Service Business</span></div>
-      <div class="case reveal"><div><span class="metric">Case Study</span><p>Lead generation systems in action — coming soon.</p></div><span class="eyebrow" style="color:var(--gold)">Home Services</span></div>
-      <div class="case reveal"><div><span class="metric">Case Study</span><p>eCommerce sales campaigns — coming soon.</p></div><span class="eyebrow" style="color:var(--gold)">Online Brand</span></div>
-    </div>
+      <div class="case reveal">
+        <div><span class="metric">Case Study</span><p>Campaign screenshots and client results — coming soon.</p></div>
+        <span class="eyebrow" style="color:var(--gold)">Service Business</span>
+      </div>
+      <div class="case reveal">
+        <div><span class="metric">Case Study</span><p>Lead generation systems in action — coming soon.</p></div>
+        <span class="eyebrow" style="color:var(--gold)">Home Services</span>
+      </div>
+      <div class="case reveal">
+        <div><span class="metric">Case Study</span><p>eCommerce sales campaigns — coming soon.</p></div>
+        <span class="eyebrow" style="color:var(--gold)">Online Brand</span>
+      </div>
+    </div> -->
     <!-- Closing prompt and button at the end of the results section. -->
     <div style="margin-top:64px" class="reveal">
       <h3 style="font-size:clamp(1.3rem,2.5vw,1.8rem);margin-bottom:20px">Want Results Like This for Your Business?</h3>
@@ -1132,39 +1343,45 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
   </div>
 </section>
 
-<!-- ===== TESTIMONIALS: review cards, placeholders until real client quotes arrive ===== -->
+<!-- ===== TESTIMONIALS: commented out for now — placeholder review cards, hidden until real
+     client quotes come in. Uncomment this whole block to put the section back; the annotation
+     lines inside lost their comment markers so they would not close this wrapper early.
+     The .tst / .tst-grid styles are still up in the stylesheet, untouched. =====
+
 <section id="testimonials" style="border-top:1px solid var(--border)">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">What Clients Say</span>
       <h2>Real Results.<br>Real Businesses.</h2>
-      <p style="margin-top:16px;max-width:640px">Client stories are on the way as we grow. Want to be one of the first businesses featured here?</p>
+      <p style="margin-top:16px;max-width:640px">Client stories are on the way as we grow.
+        Want to be one of the first businesses featured here?</p>
     </div>
-    <!-- Three review cards. Swap the quote, name, and location as clients give them. -->
+    Three review cards. Swap the quote, name, and location as clients give them.
     <div class="tst-grid">
-      <!-- Placeholder review 1. -->
+      Placeholder review 1.
       <div class="tst reveal">
         <div class="stars">★★★★★</div>
         <p class="quote">Your success story could go right here. Client testimonials coming soon.</p>
         <div class="who"><div class="av">★</div><div><b>Your Business</b><span>Greater Boston, MA</span></div></div>
       </div>
-      <!-- Placeholder review 2. -->
+      Placeholder review 2.
       <div class="tst reveal">
         <div class="stars">★★★★★</div>
         <p class="quote">Real feedback from real clients will appear here as our results roll in.</p>
         <div class="who"><div class="av">★</div><div><b>Your Business</b><span>Massachusetts</span></div></div>
       </div>
-      <!-- Placeholder review 3. -->
+      Placeholder review 3.
       <div class="tst reveal">
         <div class="stars">★★★★★</div>
         <p class="quote">This spot is reserved for a business we help generate more leads and sales.</p>
         <div class="who"><div class="av">★</div><div><b>Your Business</b><span>Greater Boston, MA</span></div></div>
       </div>
     </div>
-    <!-- Invitation to be one of the first businesses featured here. -->
+    Invitation to be one of the first businesses featured here.
     <div style="margin-top:48px" class="reveal"><a class="btn btn-solid" href="#contact">Become a Featured Client</a></div>
   </div>
 </section>
+-->
 
 <!-- ===== ABOUT: who we are, followed by the three value cards ===== -->
 <section id="about" style="border-top:1px solid var(--border)">
@@ -1176,15 +1393,32 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
       <h2 style="font-size:clamp(1.8rem,4vw,2.8rem)">Performance First.<br>Data Backed.<br>Built for Growth.</h2>
     </div>
     <div class="reveal">
-      <p class="big" style="font-size:1.1rem">Aperio Digital exists for one reason: to help businesses grow with marketing that can actually be measured. No vanity metrics, no fluff — strategy, execution, and systems that generate leads, close sales, and scale.</p>
-      <p style="margin-top:20px">Aperio is Latin for "I open, I reveal" — because that's the job: opening your business to the customers already searching for it. Based in the Greater Boston area, working with service businesses, contractors, and online brands across Massachusetts and beyond.</p>
+      <p class="big" style="font-size:1.1rem">Aperio Digital exists for one reason:
+        to help businesses grow with marketing that can actually be measured.
+        No vanity metrics, no fluff; strategy, execution, and systems that generate leads, close sales, and scale.</p>
+      <p style="margin-top:20px">Aperio is Latin for "I open, I reveal", because that's the job:
+        opening your business to the customers already searching for it.
+        Based in the Greater Boston area, working with service businesses, contractors,
+        and online brands across Massachusetts and beyond.</p>
     </div>
   </div>
   <!-- Three value cards: strategy, execution, transparency. -->
   <div class="wrap values">
-    <div class="card reveal"><span class="idx">/ 01</span><h3>Strategy</h3><p>Every campaign starts with a plan built around your business goals, market, and margins — not a template.</p></div>
-    <div class="card reveal"><span class="idx">/ 02</span><h3>Execution</h3><p>Daily monitoring, creative testing, and continuous optimization. Systems that run and improve every week.</p></div>
-    <div class="card reveal"><span class="idx">/ 03</span><h3>Transparency</h3><p>Clear reporting on what was spent, what came in, and what's next. You always know what your marketing is doing.</p></div>
+    <div class="card reveal">
+      <span class="idx">/ 01</span>
+      <h3>Strategy</h3>
+      <p>Every campaign starts with a plan built around your business goals, market, and margins — not a template.</p>
+    </div>
+    <div class="card reveal">
+      <span class="idx">/ 02</span>
+      <h3>Execution</h3>
+      <p>Daily monitoring, creative testing, and continuous optimization. Systems that run and improve every week.</p>
+    </div>
+    <div class="card reveal">
+      <span class="idx">/ 03</span>
+      <h3>Transparency</h3>
+      <p>Clear reporting on what was spent, what came in, and what's next. You always know what your marketing is doing.</p>
+    </div>
   </div>
 </section>
 
@@ -1221,7 +1455,11 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
         </select>
       </div>
       <!-- Free text box for their goals and any details. -->
-      <div class="full"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="We're a roofing company near Boston and want more local leads. Most of our work comes from referrals right now."></textarea></div>
+      <div class="full">
+        <label for="f-msg">Message</label>
+        <textarea id="f-msg" name="message"
+          placeholder="We're a roofing company near Boston and want more local leads. Most of our work comes from referrals right now."></textarea>
+      </div>
       <!-- Honeypot. Invisible to people, irresistible to bots: if this turns up
            filled in, the backend silently drops the submission. -->
       <div class="hp" aria-hidden="true">
@@ -1248,10 +1486,15 @@ footer{border-top:1px solid var(--border);padding:44px 0;position:relative}
     </a>
     <!-- Copyright line. Worth bumping the year every January. -->
     <span>© 2026 Aperio Digital. All rights reserved.</span>
-    <!-- Social buttons. The hrefs are still "#" placeholders and need the real profile links. -->
+    <!-- Social buttons, commented out for now. Uncomment once the real profile links exist —
+         the hrefs are still "#" placeholders. The .socials styles are untouched in the stylesheet.
     <div class="socials">
-      <a href="#" aria-label="TikTok">TikTok</a><a href="#" aria-label="Instagram">Instagram</a><a href="#" aria-label="Facebook">Facebook</a><a href="#" aria-label="X">X</a>
+      <a href="#" aria-label="TikTok">TikTok</a>
+      <a href="#" aria-label="Instagram">Instagram</a>
+      <a href="#" aria-label="Facebook">Facebook</a>
+      <a href="#" aria-label="X">X</a>
     </div>
+    -->
     <!-- Legal links. Both still point at "#" and need real pages behind them. -->
     <div class="links"><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a></div>
   </div>

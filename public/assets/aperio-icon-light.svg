@@ -11,5 +11,5 @@
     <path d="M162,400 L256,164 L350,400"  stroke="#3f78ff" stroke-width="13" opacity="0.8"/>
     <path d="M204,400 L256,238 L308,400"  stroke="#5B8CFF" stroke-width="11" opacity="0.62"/>
   </g>
-  <circle cx="256" cy="238" r="11" fill="url(#apCoreLight)"/>
+  <circle cx="256" cy="238" r="17" fill="url(#apCoreLight)"/>
 </svg>
